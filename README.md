@@ -15,37 +15,37 @@ Aplikasi ini telah dimodernisasi dari berkas statis & `.bat` lama menjadi arsite
 
 ---
 
-## 💻 Cara Menjalankan di MacBook (macOS) / Linux
+## 💻 Cara Menjalankan (Windows, macOS, & Linux)
 
-Tidak perlu lagi menjalankan file `.bat`! Anda cukup menjalankan salah satu cara berikut:
+Aplikasi ini sudah mendukung *cross-platform runner* (`concurrently`). Anda cukup menjalankan:
 
-### Opsi 1: Menggunakan NPM (Rekomendasi)
-Buka Terminal di folder proyek, lalu jalankan:
+### Langkah Awal (Pertama Kali Clone)
+Pastikan dependensi frontend terpasang terlebih dahulu:
+```bash
+npm run install:all
+# atau: cd Certification-dashboard && npm install
+```
+
+### Menjalankan Aplikasi
+Buka Terminal / Command Prompt / PowerShell di folder proyek, lalu jalankan:
 ```bash
 # Menjalankan Go Backend (port 8080) & React Vite Frontend (port 5173) sekaligus
 npm run dev
 ```
 
-Browser di MacBook Anda akan otomatis terbuka ke `http://localhost:5173`!
+Browser Anda akan otomatis terbuka ke `http://localhost:5173`!
 
-### Opsi 2: Menggunakan Skrip Langsung
-```bash
-./dev.sh
-```
+---
 
-### Opsi 3: Menggunakan Python FastAPI Backend (Jika Lebih Menyukai Python)
-Jika Anda ingin backend berjalan menggunakan Python FastAPI:
-```bash
-# Setup venv & install dependencies FastAPI (hanya sekali di awal)
-cd Certification-dashboard/backend-py
-python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-cd ../..
-
-# Jalankan fullstack dengan backend Python
-npm run dev:py
-# atau: ./dev.sh --py
-```
+### Alternatif Skrip
+- **macOS / Linux (Bash Script)**:
+  ```bash
+  ./dev.sh
+  ```
+- **Backend Python (FastAPI)**:
+  ```bash
+  npm run dev:py
+  ```
 
 ### Opsi 4: Menggunakan Makefile
 ```bash

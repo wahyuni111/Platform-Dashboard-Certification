@@ -3,9 +3,13 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "./dev.sh",
-    "dev:go": "./dev.sh",
-    "dev:py": "./dev.sh --py",
-    "build": "cd Certification-dashboard && npm run build"
+    "dev": "npm --prefix Certification-dashboard run dev",
+    "dev:go": "npm --prefix Certification-dashboard run dev:go",
+    "dev:py": "npm --prefix Certification-dashboard run dev:py",
+    "dev:frontend": "npm --prefix Certification-dashboard run dev:frontend",
+    "dev:backend": "npm --prefix Certification-dashboard run dev:backend",
+    "build": "npm --prefix Certification-dashboard run build",
+    "install:all": "npm --prefix Certification-dashboard run install:all",
+    "postinstall": "npm --prefix Certification-dashboard install"
   }
 }
