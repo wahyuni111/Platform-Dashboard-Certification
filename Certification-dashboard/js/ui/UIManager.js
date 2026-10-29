@@ -79,7 +79,16 @@ class UIManager {
 
     select.value = targetId;
 
+    if (window.simHalalApp && window.simHalalApp.authSession && window.simHalalApp.authSession.role === "member") {
+      select.disabled = true;
+      select.classList.add("opacity-70", "cursor-not-allowed", "bg-slate-200");
+      select.title = "Akun Anda terkunci pada profil usaha Anda sendiri";
+    }
+
     select.onchange = (e) => {
+      if (window.simHalalApp && window.simHalalApp.authSession && window.simHalalApp.authSession.role === "member") {
+        return;
+      }
       if (typeof onChangeCallback === "function" && e.target.value) {
         onChangeCallback(e.target.value);
       }

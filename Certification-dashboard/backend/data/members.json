@@ -20,17 +20,18 @@
     "manual_sjph": false,
     "kemasan_higienis": true,
     "penyelia_nama": "Ahmad Fauzi",
-    "penyelia_ktp": true,
+    "penyelia_ktp": false,
     "surat_penyelia": true,
     "ikrar_materai": false,
     "nama_layak": true,
-    "skor": 72,
+    "skor": 69,
     "status": "Perlu Pendampingan",
     "hambatan": [
       "Buat \u0026 aktivasi akun SIHALAL di portal ptsp.halal.go.id menggunakan NIB pemohon",
       "Lengkapi draf Surat Permohonan Sertifikasi Halal jalur self-declare",
       "Kumpulkan foto label/nomor sertifikat halal kemasan bumbu olahan pabrikan",
       "Susun formulir Manual SJPH (SOP Komitmen Halal) standar Fatayat NU",
+      "Lampirkan salinan fotokopi KTP penyelia halal yang ditunjuk",
       "Tandatangani Surat Pernyataan Ikrar Halal bermaterai Rp10.000"
     ],
     "formatted_phone": "0812-3456-7801",
@@ -130,12 +131,6 @@
         "desc": "Penyelia ditunjuk: Ahmad Fauzi."
       },
       {
-        "key": "penyelia_ktp",
-        "pilar": "Pilar 4: Komitmen",
-        "label": "Salinan KTP Penyelia",
-        "desc": "KTP penyelia telah diarsipkan pendamping."
-      },
-      {
         "key": "surat_penyelia",
         "pilar": "Pilar 4: Komitmen",
         "label": "SK Penetapan Penyelia",
@@ -172,6 +167,12 @@
         "pilar": "Pilar 3: Proses PPH",
         "label": "Manual SJPH Belum Disusun",
         "action": "Isi formulir Manual SJPH sederhana panduan Fatayat NU."
+      },
+      {
+        "key": "penyelia_ktp",
+        "pilar": "Pilar 4: Komitmen",
+        "label": "Salinan KTP Penyelia Kurang",
+        "action": "Lampirkan fotokopi KTP penyelia halal."
       },
       {
         "key": "ikrar_materai",

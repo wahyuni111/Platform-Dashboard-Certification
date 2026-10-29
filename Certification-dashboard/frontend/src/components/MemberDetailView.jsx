@@ -3,12 +3,14 @@ import confetti from 'canvas-confetti';
 import { Sparkles, Phone, MapPin, FileText, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 import HalalMilestones from './HalalMilestones';
 import ComparisonColumns from './ComparisonColumns';
+import DocumentUploadTasks from './DocumentUploadTasks';
 import AuditChecklist from './AuditChecklist';
 import ActionBox from './ActionBox';
 
 export default function MemberDetailView({
   member,
   onToggleCriterion,
+  onUpdateMemberData,
   onPrintAudit
 }) {
   if (!member) {
@@ -19,7 +21,7 @@ export default function MemberDetailView({
     );
   }
 
-  // Trigger celebration confetti if score is 100%
+  // Trigger celebration confetti if score reaches 100%
   useEffect(() => {
     if (member.skor === 100) {
       confetti({
@@ -62,9 +64,9 @@ export default function MemberDetailView({
   const StatusIcon = theme.icon;
 
   return (
-    <div className="fade-enter">
-      {/* 1. Warm Personal Welcome Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm mb-6">
+    <div className="fade-enter space-y-6">
+      {/* 1. Warm Personal Welcome Banner with Halal Readiness Score Card */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           
           {/* Left: Identity info */}
@@ -82,7 +84,7 @@ export default function MemberDetailView({
                   {member.kategori}
                 </span>
                 <span className="text-xs text-slate-400">
-                  Penyelia: <strong className="text-slate-700">{member.penyelia_nama}</strong>
+                  Penyelia: <strong className="text-slate-700">{member.penyelia_nama || 'Muslim Terverifikasi'}</strong>
                 </span>
               </div>
 
@@ -142,7 +144,7 @@ export default function MemberDetailView({
             {/* Score Progress Bar */}
             <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
               <div
-                className={`h-full ${theme.bar} rounded-full progress-bar-fill`}
+                className={`h-full ${theme.bar} rounded-full transition-all duration-500`}
                 style={{ width: `${member.skor}%` }}
               ></div>
             </div>
@@ -154,19 +156,26 @@ export default function MemberDetailView({
       {/* 2. Milestone Halal Journey Tracker */}
       <HalalMilestones milestones={member.journey_milestones || []} />
 
-      {/* 3. 2-Column Comparison: [V] vs [X] */}
+      {/* 3. 8 Kartu Tugas Upload Dokumen Asli & Unduh Template (FITUR UTAMA REVISI TAB 2) */}
+      <DocumentUploadTasks
+        member={member}
+        onUpdateMemberData={onUpdateMemberData}
+        onToggleCriterion={onToggleCriterion}
+      />
+
+      {/* 4. 2-Column Comparison: [V] vs [X] */}
       <ComparisonColumns
         completedItems={member.completed_items || []}
         pendingItems={member.pending_items || []}
       />
 
-      {/* 4. Interactive 4-Pillar Matrix (18 Indicators) */}
+      {/* 5. Interactive 4-Pillar Matrix (18 Indicators) */}
       <AuditChecklist
         member={member}
         onToggleCriterion={onToggleCriterion}
       />
 
-      {/* 5. Action Box & Quick Consult */}
+      {/* 6. Action Box & Quick Consult */}
       <ActionBox
         member={member}
         onPrintAudit={onPrintAudit}

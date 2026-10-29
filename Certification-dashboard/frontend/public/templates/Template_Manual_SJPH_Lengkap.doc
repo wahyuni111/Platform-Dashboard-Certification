@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Manual Sistem Jaminan Produk Halal (SJPH)</title>
+<style>
+  body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5; margin: 2cm 2.5cm; color: #111; }
+  h1, h2, h3, h4 { color: #0E2915; font-family: 'Times New Roman', Times, serif; }
+  .title-page { text-align: center; margin-top: 40px; margin-bottom: 60px; }
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+  .text-justify { text-align: justify; }
+  .font-bold { font-weight: bold; }
+  table.border-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  table.border-table th, table.border-table td { border: 1px solid #333; padding: 6px 8px; vertical-align: top; }
+  table.border-table th { background-color: #EBF3ED; font-weight: bold; }
+  .kop { border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 20px; }
+  .box-note { border: 1px solid #1E4D2B; background: #F4F8F5; padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 10.5pt; }
+  .page-break { page-break-after: always; }
+</style>
+</head>
+<body>
+
+<div class="title-page">
+  <h1 style="font-size: 18pt; margin-bottom: 5px; text-transform: uppercase;">MANUAL</h1>
+  <h2 style="font-size: 16pt; margin-top: 0; text-transform: uppercase;">SISTEM JAMINAN PRODUK HALAL (SJPH)</h2>
+  <div style="height: 40px;"></div>
+  <h3 style="font-size: 14pt; font-weight: bold;">[NAMA USAHA / PERUSAHAAN]</h3>
+  <p style="font-size: 12pt; color: #555;">Pimpinan Ranting Fatayat NU Desa Mersi, Purwokerto Timur</p>
+</div>
+
+<div class="box-note text-justify">
+  <strong>LEMBAR PENGESAHAN (REVISI 1.0)</strong><br><br>
+  Manual halal ini adalah milik <strong>[NAMA USAHA / PERUSAHAAN]</strong> yang memuat kebijakan dan ketentuan yang dilaksanakan dalam rangka pemenuhan persyaratan sertifikasi halal yang ditetapkan oleh Badan Penyelenggara Jaminan Produk Halal (BPJPH) Kementerian Agama RI. Manual halal ini hanya berlaku apabila telah diisi secara lengkap beserta lampirannya dan ditandatangani oleh pemilik usaha. Manual halal ini tidak boleh diduplikasi/diedit tanpa seizin dari pemilik usaha.
+</div>
+
+<table class="border-table">
+  <tr>
+    <th style="width: 50%; text-align: center;">Disiapkan / Disetujui: Penyelia Halal</th>
+    <th style="width: 50%; text-align: center;">Disahkan: Pimpinan Usaha / Pemilik</th>
+  </tr>
+  <tr>
+    <td style="height: 80px; vertical-align: bottom; text-align: center;">
+      ( .................................................... )<br>
+      Tanggal: ..... / ................. / 2026
+    </td>
+    <td style="height: 80px; vertical-align: bottom; text-align: center;">
+      ( .................................................... )<br>
+      Tanggal: ..... / ................. / 2026
+    </td>
+  </tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2>DASAR HUKUM</h2>
+<ol style="line-height: 1.8;">
+  <li>Undang-Undang No. 33 Tahun 2014 Tentang Jaminan Produk Halal.</li>
+  <li>Undang-Undang No. 11 Tahun 2020 Tentang Cipta Kerja.</li>
+  <li>Peraturan Pemerintah No. 39 Tahun 2021 Tentang Penyelenggaraan Bidang Jaminan Produk Halal.</li>
+  <li>Peraturan Menteri Agama No. 26 Tahun 2019 Tentang Penyelenggaraan Jaminan Produk Halal.</li>
+  <li>Keputusan Menteri Agama Nomor 982 Tahun 2019 Tentang Layanan Sertifikasi Halal.</li>
+  <li>Keputusan Menteri Agama Nomor 748 Tahun 2021 Tentang Jenis Produk Yang Wajib Bersertifikat Halal.</li>
+  <li>Keputusan Kepala Badan Penyelenggara Jaminan Produk Halal Nomor 57 Tahun 2021 tentang Kriteria Sistem Jaminan Produk Halal.</li>
+  <li>Keputusan Menteri Agama Nomor 1360 Tahun 2021 tentang Bahan yang Dikecualikan dari Kewajiban Bersertifikat Halal (Positive List).</li>
+</ol>
+
+<h2>DAFTAR ISI</h2>
+<table style="width: 100%; border: none; font-size: 11pt; line-height: 1.8;">
+  <tr><td>Dasar Hukum</td><td style="text-align: right;">1</td></tr>
+  <tr><td>Daftar Isi</td><td style="text-align: right;">2</td></tr>
+  <tr><td><strong>I. PENDAHULUAN</strong></td><td style="text-align: right;">3</td></tr>
+  <tr><td style="padding-left: 20px;">A. Informasi Umum Perusahaan</td><td style="text-align: right;">3</td></tr>
+  <tr><td style="padding-left: 20px;">B. Tujuan</td><td style="text-align: right;">3</td></tr>
+  <tr><td style="padding-left: 20px;">C. Ruang Lingkup</td><td style="text-align: right;">4</td></tr>
+  <tr><td><strong>II. KRITERIA SISTEM JAMINAN PRODUK HALAL</strong></td><td style="text-align: right;">5</td></tr>
+  <tr><td style="padding-left: 20px;">A. Komitmen dan Tanggung Jawab</td><td style="text-align: right;">5</td></tr>
+  <tr><td style="padding-left: 20px;">B. Bahan</td><td style="text-align: right;">7</td></tr>
+  <tr><td style="padding-left: 20px;">C. Proses Produk Halal (PPH)</td><td style="text-align: right;">8</td></tr>
+  <tr><td style="padding-left: 20px;">D. Produk</td><td style="text-align: right;">12</td></tr>
+  <tr><td style="padding-left: 20px;">E. Pemantauan dan Evaluasi</td><td style="text-align: right;">13</td></tr>
+  <tr><td><strong>LAMPIRAN DOKUMEN PENDUKUNG (18 LAMPIRAN RESMI)</strong></td><td style="text-align: right;">14</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2>I. PENDAHULUAN</h2>
+<h3>A. Informasi Umum Perusahaan</h3>
+<table style="width: 100%; line-height: 1.8;">
+  <tr><td style="width: 230px;">Nama Perusahaan / Usaha</td><td style="width: 15px;">:</td><td><strong>[NAMA USAHA]</strong></td></tr>
+  <tr><td>Nomor Induk Berusaha (NIB)</td><td>:</td><td><strong>[NOMOR NIB OSS-RBA]</strong></td></tr>
+  <tr><td>Skala Usaha</td><td>:</td><td>Usaha Mikro / Kecil (UMK)</td></tr>
+  <tr><td>Nama Pimpinan / Pemilik</td><td>:</td><td><strong>[NAMA PEMILIK]</strong></td></tr>
+  <tr><td>Nama Penyelia Halal</td><td>:</td><td><strong>[NAMA PENYELIA HALAL]</strong></td></tr>
+  <tr><td>Alamat Usaha / Dapur</td><td>:</td><td>Desa Mersi, Kec. Purwokerto Timur, Kab. Banyumas</td></tr>
+  <tr><td>Nomor Kontak / WhatsApp</td><td>:</td><td>08..................................</td></tr>
+  <tr><td>Email Resmi</td><td>:</td><td>................................@gmail.com</td></tr>
+  <tr><td>Nama / Merek Produk</td><td>:</td><td>[MEREK PRODUK]</td></tr>
+  <tr><td>Jenis / Kategori Produk</td><td>:</td><td>Makanan / Minuman / Kudapan Olahan</td></tr>
+  <tr><td>Daerah Pemasaran</td><td>:</td><td>Kabupaten Banyumas & Sekitarnya</td></tr>
+  <tr><td>Sistem Pemasaran</td><td>:</td><td>Retail (Langsung ke Konsumen)</td></tr>
+</table>
+
+<h3>B. Tujuan</h3>
+<p class="text-justify">
+Manual Sistem Jaminan Produk Halal (SJPH) disusun untuk menjadi pedoman operasional dalam penerapan SJPH di perusahaan, dalam rangka menjaga kesinambungan produksi halal sesuai dengan ketentuan peraturan perundang-undangan dan persyaratan sertifikasi halal yang ditetapkan oleh BPJPH Kementerian Agama Republik Indonesia.
+</p>
+
+<h3>C. Ruang Lingkup</h3>
+<p class="text-justify">
+Manual SJPH ini berlaku untuk seluruh fasilitas produksi, penanganan bahan baku, penyimpanan, pengolahan, pengemasan, hingga distribusi produk yang dikelola oleh <strong>[NAMA USAHA]</strong> di wilayah Desa Mersi, Purwokerto Timur.
+</p>
+
+<h2>II. KRITERIA SISTEM JAMINAN PRODUK HALAL</h2>
+<h3>A. Komitmen dan Tanggung Jawab</h3>
+<div class="box-note">
+  <h4 style="margin: 0 0 8px 0; text-align: center;">KEBIJAKAN HALAL</h4>
+  <p class="text-justify" style="margin: 0;">
+    Kami berkomitmen dan bertanggung jawab untuk senantiasa memproduksi produk halal dan thayyib secara konsisten dan berkesinambungan dengan:
+  </p>
+  <ol style="margin-top: 6px; margin-bottom: 6px;">
+    <li>Mematuhi peraturan perundang-undangan terkait jaminan produk halal di Indonesia.</li>
+    <li>Menggunakan bahan yang jelas kehalalannya (bersertifikat halal / masuk daftar Positive List KMA 1360/2021).</li>
+    <li>Menjaga seluruh fasilitas dapur dan peralatan pengolahan bebas dari kontaminasi najis.</li>
+    <li>Menunjuk penyelia halal muslim yang berdedikasi mengawasi proses produksi halal harian.</li>
+  </ol>
+  <p class="text-right" style="margin: 15px 0 0 0;">
+    Mersi, ...................................... 2026<br>
+    Pimpinan Perusahaan,<br><br><br>
+    <strong>( [NAMA PEMILIK] )</strong>
+  </p>
+</div>
+
+<h3>B. Bahan</h3>
+<ol style="line-height: 1.8;">
+  <li>Seluruh jenis bahan yang digunakan untuk proses produksi dilengkapi dengan dokumen pendukung sertifikat halal yang valid, kecuali bahan tidak kritis nabati murni sesuai KMA 1360 Tahun 2021.</li>
+  <li>Menyusun Daftar Bahan Halal dan memperbarui jika terdapat perubahan bahan/produsen.</li>
+  <li>Memelihara catatan dan nota pembelian bahan selama masa berlaku sertifikat halal.</li>
+  <li>Memeriksa keutuhan kemasan dan logo halal resmi pada setiap penerimaan/pembelian bahan.</li>
+</ol>
+
+<h3>C. Proses Produk Halal (PPH)</h3>
+<ol style="line-height: 1.8;">
+  <li><strong>Lokasi, Tempat, dan Alat:</strong> Lokasi produksi berlokasi bersih dan jauh dari peternakan babi atau kegiatan pengolahan yang mengandung najis haram. Sarana produksi dijamin bebas dari unsur babi (<em>pork-free facility</em>).</li>
+  <li><strong>Pemisahan Alat:</strong> Peralatan masak, wajan, pisau, blender, dan wadah penyimpanan didedikasikan secara khusus untuk proses produk halal dan tidak bercampur dengan bahan non-halal.</li>
+  <li><strong>Penyucian:</strong> Fasilitas dicuci dengan air bersih mengalir hingga hilang warna, bau, dan rasa pengotor.</li>
+  <li><strong>Pengemasan:</strong> Menggunakan wadah plastik/kemasan pangan yang bersih, higienis, dan tertutup rapat.</li>
+</ol>
+
+<h3>D. Produk</h3>
+<p class="text-justify">
+Produk yang didaftarkan halal tidak menggunakan nama merek yang mengarah pada sesuatu yang diharamkan (misalnya istilah minuman keras, setan, atau babi). Bentuk dan profil sensori produk tidak menyerupai produk haram.
+</p>
+
+<h3>E. Pemantauan dan Evaluasi</h3>
+<p class="text-justify">
+Audit internal dilakukan setidaknya satu tahun sekali secara mandiri oleh tim pendamping/penyelia halal untuk mengevaluasi kepatuhan terhadap 5 kriteria SJPH.
+</p>
+
+<div class="page-break"></div>
+
+<h2>LAMPIRAN DOKUMEN RESMI (TEMPLATE SIAP PAKAI)</h2>
+<p>Berikut daftar lampiran standar yang wajib diisi dan disimpan sebagai arsip portofolio audit BPJPH:</p>
+
+<ul>
+  <li><strong>Lampiran 1:</strong> Kebijakan Halal Perusahaan</li>
+  <li><strong>Lampiran 2:</strong> Poster Sosialisasi Halal-Haram & Edukasi Karyawan</li>
+  <li><strong>Lampiran 3:</strong> Surat Keputusan Penetapan Tim Manajemen Halal / Penyelia Halal</li>
+  <li><strong>Lampiran 4:</strong> Materi Pelatihan Internal Halal</li>
+  <li><strong>Lampiran 5:</strong> Formulir Daftar Bahan Baku, Bahan Tambahan, dan Bahan Penolong</li>
+  <li><strong>Lampiran 6:</strong> Daftar Bahan yang Digunakan pada Setiap Varian Produk</li>
+  <li><strong>Lampiran 7:</strong> Catatan Pembelian Bahan (Buku Kas Masuk Bahan)</li>
+  <li><strong>Lampiran 8:</strong> Formulir Pemeriksaan Bahan Datang</li>
+  <li><strong>Lampiran 9:</strong> Surat Pernyataan Bebas Babi (<em>Statement of Pork Free Facility</em>)</li>
+  <li><strong>Lampiran 10:</strong> Layout / Denah Ruang Dapur Produksi Halal</li>
+  <li><strong>Lampiran 11:</strong> Catatan Penyimpanan Bahan dan Produk Jadi</li>
+  <li><strong>Lampiran 12:</strong> Diagram Alir Proses Produksi (PPH)</li>
+  <li><strong>Lampiran 13:</strong> Catatan Hasil Produksi Harian</li>
+  <li><strong>Lampiran 14:</strong> Catatan Distribusi / Penjualan Produk</li>
+  <li><strong>Lampiran 15:</strong> Surat Permohonan Persetujuan Penggunaan Bahan Baru</li>
+  <li><strong>Lampiran 16:</strong> Formulir Daftar Periksa Audit Internal (Checklist 5 Kriteria SJPH)</li>
+  <li><strong>Lampiran 17:</strong> Risalah Kaji Ulang Manajemen</li>
+  <li><strong>Lampiran 18:</strong> Pemetaan Pabrik dan Produk</li>
+</ul>
+
+<div style="margin-top: 40px; text-align: center;">
+  <p>Pimpinan Ranting Fatayat Nahdlatul Ulama Desa Mersi<br>Program Sains Data untuk Masyarakat (SDUM) 2026</p>
+</div>
+
+</body>
+</html>

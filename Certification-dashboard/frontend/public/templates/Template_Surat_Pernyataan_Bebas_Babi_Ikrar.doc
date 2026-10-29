@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Surat Ikrar Halal dan Bebas Babi BPJPH</title>
+<style>
+body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; margin: 2.5cm; }
+.text-center { text-align: center; }
+.kop { border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+td { padding: 4px 6px; vertical-align: top; }
+.box-materai { border: 1px dashed #666; width: 140px; height: 90px; text-align: center; line-height: 90px; margin: 15px auto; font-size: 9pt; color: #555; }
+</style>
+</head>
+<body>
+<div class="kop text-center">
+  <h3 style="margin:0;">SURAT PERNYATAAN BEBAS BABI DAN IKRAR HALAL PELAKU USAHA</h3>
+  <h4 style="margin:4px 0;">PROGRAM SERTIFIKASI HALAL GRATIS (SEHATI) JALUR SELF-DECLARE</h4>
+  <p style="margin:0; font-size:10pt;">BADAN PENYELENGGARA JAMINAN PRODUK HALAL (BPJPH) KEMENAG RI</p>
+</div>
+
+<p>Bismillahirrohmanirrohim,<br>Yang bertanda tangan di bawah ini:</p>
+<table>
+  <tr><td style="width:220px;">Nama Pelaku Usaha</td><td style="width:20px;">:</td><td><strong>..................................................</strong></td></tr>
+  <tr><td>Nomor KTP (NIK)</td><td>:</td><td>..................................................</td></tr>
+  <tr><td>Nama Usaha / Merek</td><td>:</td><td><strong>..................................................</strong></td></tr>
+  <tr><td>Alamat Produksi</td><td>:</td><td>Desa Mersi, Kec. Purwokerto Timur, Kab. Banyumas</td></tr>
+  <tr><td>Jenis Produk / Menu</td><td>:</td><td>Olahan Makanan / Minuman</td></tr>
+</table>
+
+<p style="text-align:justify;">Dengan ini menyatakan dengan sesungguhnya di hadapan Allah SWT dan pihak yang berwenang bahwa:</p>
+<ol>
+  <li>Seluruh produk yang kami buat, olah, dan jual <strong>SAMA SEKALI TIDAK MENGANDUNG unsur babi, anjing, khamr (alkohol memabukkan), maupun turunan bahan haram lainnya</strong>.</li>
+  <li>Seluruh fasilitas dapur, peralatan masak, alat penggorengan, wadah, serta pisau <strong>BEBAS DARI KONTAMINASI NAJIS</strong> dan tidak pernah bersentuhan dengan bahan yang diharamkan.</li>
+  <li>Semua bahan yang digunakan berasal dari sumber halal, terdaftar dalam <em>Positive List BPJPH</em>, atau telah bersertifikat halal resmi.</li>
+  <li>Bersedia mematuhi segala ketentuan Sistem Jaminan Produk Halal (SJPH) serta siap dilakukan verifikasi lapangan oleh Pendamping Halal Fatayat NU Mersi.</li>
+</ol>
+
+<p>Apabila di kemudian hari terbukti pernyataan ini tidak benar, saya bersedia dicabut sertifikat halalnya dan diproses sesuai hukum yang berlaku di Indonesia.</p>
+
+<table style="width:100%; margin-top:30px;">
+  <tr>
+    <td style="width:50%; text-align:center;">
+      Mengetahui,<br>Pendamping Halal Fatayat NU Mersi
+      <div style="height:70px;"></div>
+      ( .................................................. )
+    </td>
+    <td style="width:50%; text-align:center;">
+      Mersi, ................................. 2026<br>
+      Yang Menyatakan (Pelaku Usaha),
+      <div class="box-materai">Tempel Materai<br>Rp10.000</div>
+      <strong>( .................................................. )</strong><br>
+      Tanda tangan di atas materai
+    </td>
+  </tr>
+</table>
+</body>
+</html>
