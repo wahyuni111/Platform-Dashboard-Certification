@@ -3,14 +3,16 @@
   "version": "2.0.0",
   "description": "Portal Monitoring & Kesiapan Sertifikasi Halal BPJPH - Pimpinan Ranting Fatayat NU Desa Mersi (Modern Stack: React + Vite + Tailwind & Golang Backend)",
   "scripts": {
-    "dev": "./dev.sh",
-    "dev:go": "./dev.sh",
-    "dev:py": "./dev.sh --py",
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan.bold,magenta.bold\" --kill-others \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:go": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan.bold,magenta.bold\" --kill-others \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:py": "concurrently -n \"BACKEND,FRONTEND\" -c \"yellow.bold,magenta.bold\" --kill-others \"npm run dev:backend-py\" \"npm run dev:frontend\"",
+    "dev:sh": "./dev.sh",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && go run main.go",
     "dev:backend-py": "cd backend-py && python3 -m uvicorn main:app --reload --port 8080",
     "build": "cd frontend && npm run build && cd ../backend && go build -o server main.go",
-    "install:all": "cd frontend && npm install"
+    "install:all": "npm install && cd frontend && npm install",
+    "postinstall": "cd frontend && npm install"
   },
   "keywords": [
     "halal",
@@ -25,5 +27,8 @@
     "sdum-2026"
   ],
   "author": "Program Sains Data untuk Masyarakat (SDUM) 2026",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
 }
