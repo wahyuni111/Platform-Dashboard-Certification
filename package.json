@@ -1,0 +1,11 @@
+{
+  "name": "web-certification-dashboard-workspace",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "./dev.sh",
+    "dev:go": "./dev.sh",
+    "dev:py": "./dev.sh --py",
+    "build": "cd Certification-dashboard && npm run build"
+  }
+}
