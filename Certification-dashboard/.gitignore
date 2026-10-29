@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Builds
+dist/
+*/dist/
+backend/server
+*.exe
+*.o
+
+# Python
+__pycache__/
+*.pyc
+venv/
+*/venv/
+.pytest_cache/

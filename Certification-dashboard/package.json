@@ -1,0 +1,29 @@
+{
+  "name": "sim-halal-fatayat-nu-mersi",
+  "version": "2.0.0",
+  "description": "Portal Monitoring & Kesiapan Sertifikasi Halal BPJPH - Pimpinan Ranting Fatayat NU Desa Mersi (Modern Stack: React + Vite + Tailwind & Golang Backend)",
+  "scripts": {
+    "dev": "./dev.sh",
+    "dev:go": "./dev.sh",
+    "dev:py": "./dev.sh --py",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && go run main.go",
+    "dev:backend-py": "cd backend-py && python3 -m uvicorn main:app --reload --port 8080",
+    "build": "cd frontend && npm run build && cd ../backend && go build -o server main.go",
+    "install:all": "cd frontend && npm install"
+  },
+  "keywords": [
+    "halal",
+    "bpjph",
+    "fatayat-nu",
+    "react",
+    "vite",
+    "tailwind",
+    "golang",
+    "fastapi",
+    "purwokerto",
+    "sdum-2026"
+  ],
+  "author": "Program Sains Data untuk Masyarakat (SDUM) 2026",
+  "license": "MIT"
+}
