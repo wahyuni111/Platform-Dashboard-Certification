@@ -1,48 +1,59 @@
 [
   {
     "id": "FTY-001",
-    "nama": "Siti Aminah",
-    "usaha": "Keripik Tempe Barokah",
-    "kategori": "Kudapan Kering",
-    "kontak": "081234567801",
-    "alamat": "RT 02 RW 01 Desa Mersi",
-    "nib": "1234567890123",
+    "nama": "",
+    "usaha": "",
+    "kategori": "",
+    "kontak": "",
+    "alamat": "",
+    "nib": "",
     "ktp_pemilik": true,
-    "kbli": true,
+    "kbli": false,
     "sihalal": false,
     "permohonan": false,
-    "daftar_bahan": true,
-    "bahan_nonkritis": true,
+    "daftar_bahan": false,
+    "bahan_nonkritis": false,
     "bahan_kritis_halal": false,
-    "air_bersih": true,
-    "dapur_bersih": true,
-    "alat_khusus": true,
+    "air_bersih": false,
+    "dapur_bersih": false,
+    "alat_khusus": false,
     "manual_sjph": false,
-    "kemasan_higienis": true,
-    "penyelia_nama": "Ahmad Fauzi",
+    "kemasan_higienis": false,
+    "penyelia_nama": "",
     "penyelia_ktp": false,
-    "surat_penyelia": true,
+    "surat_penyelia": false,
     "ikrar_materai": false,
-    "nama_layak": true,
-    "skor": 69,
-    "status": "Perlu Pendampingan",
+    "nama_layak": false,
+    "skor": 5,
+    "status": "Belum Siap",
     "hambatan": [
+      "Segera buat NIB (Nomor Induk Berusaha) berbasis OSS-RBA melalui oss.go.id",
+      "Sesuaikan kode KBLI izin usaha ke bidang olahan pangan/kudapan",
       "Buat \u0026 aktivasi akun SIHALAL di portal ptsp.halal.go.id menggunakan NIB pemohon",
       "Lengkapi draf Surat Permohonan Sertifikasi Halal jalur self-declare",
+      "Tuliskan seluruh komposisi bahan dan bumbu dalam Formulir Rincian Bahan",
+      "Verifikasi bahan non-kritis masuk dalam Positive List Kemenag",
       "Kumpulkan foto label/nomor sertifikat halal kemasan bumbu olahan pabrikan",
+      "Pastikan sanitasi dan sumber air bersih memenuhi standar pangan",
+      "Bersihkan area dapur produksi agar terhindar dari najis \u0026 hewan peliharaan",
+      "Pisahkan wadah dan alat masak khusus hanya untuk produksi halal",
       "Susun formulir Manual SJPH (SOP Komitmen Halal) standar Fatayat NU",
+      "Gunakan kemasan tertutup rapat untuk mencegah kontaminasi produk",
+      "Tunjuk penyelia halal muslim yang bertanggung jawab atas proses produksi",
       "Lampirkan salinan fotokopi KTP penyelia halal yang ditunjuk",
-      "Tandatangani Surat Pernyataan Ikrar Halal bermaterai Rp10.000"
+      "Tandatangani Surat Keputusan (SK) Penetapan Penyelia Halal",
+      "Tandatangani Surat Pernyataan Ikrar Halal bermaterai Rp10.000",
+      "Sesuaikan nama merek agar bebas dari konotasi yang diharamkan syariat"
     ],
-    "formatted_phone": "0812-3456-7801",
-    "clean_phone_wa": "6281234567801",
-    "has_valid_nib": true,
+    "formatted_phone": "",
+    "clean_phone_wa": "62",
+    "has_valid_nib": false,
     "journey_milestones": [
       {
         "step": 1,
         "title": "Legalitas Usaha \u0026 KBLI",
         "desc": "KTP, NIB OSS, KBLI Pangan",
-        "done": true
+        "done": false
       },
       {
         "step": 2,
@@ -75,75 +86,21 @@
         "pilar": "Pilar 1: Legalitas",
         "label": "KTP Pemilik Usaha",
         "desc": "KTP-el pemohon terlampir dan aktif."
-      },
+      }
+    ],
+    "pending_items": [
       {
         "key": "nib",
         "pilar": "Pilar 1: Legalitas",
-        "label": "NIB OSS-RBA",
-        "desc": "Nomor NIB: 1234567890123 terdaftar resmi."
+        "label": "Belum Ada NIB OSS-RBA",
+        "action": "Segera daftar NIB di portal oss.go.id dengan dibantu pendamping."
       },
       {
         "key": "kbli",
         "pilar": "Pilar 1: Legalitas",
-        "label": "KBLI Pangan Olahan",
-        "desc": "Kode KBLI sesuai bidang pangan olahan."
+        "label": "KBLI Belum Sesuai",
+        "action": "Ubah kode izin usaha ke KBLI pangan olahan/kudapan."
       },
-      {
-        "key": "daftar_bahan",
-        "pilar": "Pilar 2: Bahan Baku",
-        "label": "Rincian Bahan Baku",
-        "desc": "Formula semua bahan telah didata lengkap."
-      },
-      {
-        "key": "bahan_nonkritis",
-        "pilar": "Pilar 2: Bahan Baku",
-        "label": "Bahan Non-Kritis",
-        "desc": "Komposisi nabati positive list verified."
-      },
-      {
-        "key": "air_bersih",
-        "pilar": "Pilar 2: Bahan Baku",
-        "label": "Air Bersih Higienis",
-        "desc": "Sumber air bersih memenuhi standar pangan."
-      },
-      {
-        "key": "dapur_bersih",
-        "pilar": "Pilar 3: Proses PPH",
-        "label": "Sanitasi Dapur Produksi",
-        "desc": "Area dapur bersih dan bebas najis/hewan."
-      },
-      {
-        "key": "alat_khusus",
-        "pilar": "Pilar 3: Proses PPH",
-        "label": "Pemisahan Alat Masak",
-        "desc": "Wajan \u0026 alat khusus pengolahan halal."
-      },
-      {
-        "key": "kemasan_higienis",
-        "pilar": "Pilar 3: Proses PPH",
-        "label": "Kemasan Rapat Higienis",
-        "desc": "Kemasan tertutup rapat bebas kontaminasi."
-      },
-      {
-        "key": "penyelia_nama",
-        "pilar": "Pilar 4: Komitmen",
-        "label": "Penyelia Halal Muslim",
-        "desc": "Penyelia ditunjuk: Ahmad Fauzi."
-      },
-      {
-        "key": "surat_penyelia",
-        "pilar": "Pilar 4: Komitmen",
-        "label": "SK Penetapan Penyelia",
-        "desc": "Surat penetapan resmi telah ditandatangani."
-      },
-      {
-        "key": "nama_layak",
-        "pilar": "Pilar 4: Komitmen",
-        "label": "Nama Merek Halal",
-        "desc": "Bebas dari konotasi haram/syaitan."
-      }
-    ],
-    "pending_items": [
       {
         "key": "sihalal",
         "pilar": "Pilar 1: Legalitas",
@@ -157,10 +114,40 @@
         "action": "Cetak formulir surat permohonan sertifikasi self-declare."
       },
       {
+        "key": "daftar_bahan",
+        "pilar": "Pilar 2: Bahan Baku",
+        "label": "Rincian Bahan Belum Ditulis",
+        "action": "Tuliskan seluruh komposisi bahan dan bumbu dalam formulir."
+      },
+      {
+        "key": "bahan_nonkritis",
+        "pilar": "Pilar 2: Bahan Baku",
+        "label": "Bahan Belum Terverifikasi",
+        "action": "Pastikan bahan nabati masuk daftar positive list Kemenag."
+      },
+      {
         "key": "bahan_kritis_halal",
         "pilar": "Pilar 2: Bahan Baku",
         "label": "Bukti Halal Bumbu Kurang",
         "action": "Kumpulkan foto kemasan/sertifikat halal bumbu olahan pabrik."
+      },
+      {
+        "key": "air_bersih",
+        "pilar": "Pilar 2: Bahan Baku",
+        "label": "Sumber Air Perlu Dicek",
+        "action": "Pastikan air bebas bau dan layak standar higiene pangan."
+      },
+      {
+        "key": "dapur_bersih",
+        "pilar": "Pilar 3: Proses PPH",
+        "label": "Sanitasi Dapur Perlu Dibenahi",
+        "action": "Bersihkan area dapur produksi agar terhindar dari najis/hewan."
+      },
+      {
+        "key": "alat_khusus",
+        "pilar": "Pilar 3: Proses PPH",
+        "label": "Alat Masak Belum Terpisah",
+        "action": "Sediakan wajan \u0026 pisau khusus hanya untuk produk halal."
       },
       {
         "key": "manual_sjph",
@@ -169,16 +156,40 @@
         "action": "Isi formulir Manual SJPH sederhana panduan Fatayat NU."
       },
       {
+        "key": "kemasan_higienis",
+        "pilar": "Pilar 3: Proses PPH",
+        "label": "Kemasan Belum Tertutup Rapat",
+        "action": "Gunakan kemasan tertutup rapat untuk mencegah kontaminasi."
+      },
+      {
+        "key": "penyelia_nama",
+        "pilar": "Pilar 4: Komitmen",
+        "label": "Penyelia Belum Ditunjuk",
+        "action": "Tunjuk salah satu pekerja/keluarga muslim sebagai penyelia."
+      },
+      {
         "key": "penyelia_ktp",
         "pilar": "Pilar 4: Komitmen",
         "label": "Salinan KTP Penyelia Kurang",
         "action": "Lampirkan fotokopi KTP penyelia halal."
       },
       {
+        "key": "surat_penyelia",
+        "pilar": "Pilar 4: Komitmen",
+        "label": "Surat Penetapan Belum Ada",
+        "action": "Tandatangani SK Penetapan Penyelia Halal internal usaha."
+      },
+      {
         "key": "ikrar_materai",
         "pilar": "Pilar 4: Komitmen",
         "label": "Ikrar Halal Belum Bermaterai",
         "action": "Bubuhkan materai Rp10.000 pada Surat Pernyataan Ikrar Halal."
+      },
+      {
+        "key": "nama_layak",
+        "pilar": "Pilar 4: Komitmen",
+        "label": "Nama Merek Mengandung Konotasi Dilarang",
+        "action": "Sesuaikan nama merek agar bebas dari istilah yang dilarang."
       }
     ]
   },

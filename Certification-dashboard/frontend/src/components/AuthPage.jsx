@@ -15,11 +15,19 @@ import {
   UserCheck,
   Eye,
   EyeOff,
-  KeyRound
+  KeyRound,
+  ArrowLeft
 } from 'lucide-react';
 
-export default function AuthPage({ members = [], onLogin, onRegisterNewMember }) {
-  const [activeTab, setActiveTab] = useState('member'); // 'member', 'admin', 'register'
+export default function AuthPage({
+  portalType = 'member', // 'member' | 'admin'
+  onSwitchPortal,
+  members = [],
+  onLogin,
+  onRegisterNewMember
+}) {
+  const isAdminPortal = portalType === 'admin';
+  const [activeTab, setActiveTab] = useState(isAdminPortal ? 'admin' : 'member'); // 'member', 'admin', 'register'
 
   // Member login state
   const [selectedMemberId, setSelectedMemberId] = useState(
@@ -162,186 +170,89 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
           </div>
 
           <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-[11px] font-extrabold px-3 py-0.5 rounded-full bg-nu-800/80 text-amber-300 border border-amber-400/30 uppercase tracking-widest">
-              Portal Akses SIM-HALAL
-            </span>
-            <span className="text-xs text-emerald-300 font-semibold">
+            {isAdminPortal ? (
+              <span className="text-[11px] font-extrabold px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 uppercase tracking-widest flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                Portal Khusus Pengurus & Auditor
+              </span>
+            ) : (
+              <span className="text-[11px] font-extrabold px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 uppercase tracking-widest flex items-center gap-1.5">
+                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                Portal Mandiri Pelaku Usaha
+              </span>
+            )}
+            <span className="text-xs text-slate-300 font-semibold">
               PR Fatayat NU Desa Mersi
             </span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Sistem Informasi Manajemen Halal
+            {isAdminPortal ? 'SIM-HALAL • Eksekutif Pengurus' : 'SIM-HALAL • Pelaku Usaha'}
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto mt-1 leading-relaxed">
-            Pendampingan Proses Produk Halal (PPH) Jalur <em>Self-Declare</em> BPJPH Kemenag RI
+            {isAdminPortal
+              ? 'Monitoring, Supervisi & Pendampingan 45 UMKM Halal Desa Mersi'
+              : 'Pengecekan & Kesiapan Audit Sertifikasi Halal BPJPH Jalur Self-Declare'}
           </p>
         </div>
 
         {/* Main Card Container */}
         <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
           
-          {/* Tab Selection Header (3 Pilihan: Member, Pengurus, Daftar Baru) */}
-          <div className="grid grid-cols-3 bg-slate-100/80 p-1.5 border-b border-slate-200 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => setActiveTab('member')}
-              className={`min-h-[44px] py-2.5 px-2 rounded-2xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-center ${
-                activeTab === 'member'
-                  ? 'bg-white text-nu-900 shadow-sm font-extrabold border border-slate-200/80'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <User className="w-4 h-4 text-emerald-700 flex-shrink-0" />
-              <span>Pelaku Usaha</span>
-            </button>
+          {/* TAB HEADER */}
+          {isAdminPortal ? (
+            /* ADMIN PORTAL: Single Focused Header (No member tabs) */
+            <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-nu-800 text-amber-300 flex items-center justify-center shadow-sm">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-nu-950">Login Administrator</h3>
+                  <p className="text-[11px] text-slate-500">Sekretariat & Tim Auditor PPH Fatayat NU</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full border border-amber-300">
+                Area Terbatas
+              </span>
+            </div>
+          ) : (
+            /* MEMBER PORTAL: 2 Tabs (Masuk Akun & Daftar Baru) */
+            <div className="grid grid-cols-2 bg-slate-100/80 p-1.5 border-b border-slate-200 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setActiveTab('member')}
+                className={`min-h-[44px] py-2.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-center ${
+                  activeTab === 'member'
+                    ? 'bg-white text-nu-900 shadow-sm font-extrabold border border-slate-200/80'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <User className="w-4 h-4 text-emerald-700 flex-shrink-0" />
+                <span>Masuk Pelaku Usaha</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab('admin')}
-              className={`min-h-[44px] py-2.5 px-2 rounded-2xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-center ${
-                activeTab === 'admin'
-                  ? 'bg-white text-nu-900 shadow-sm font-extrabold border border-slate-200/80'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4 text-nu-700 flex-shrink-0" />
-              <span>Pengurus Fatayat</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('register')}
-              className={`min-h-[44px] py-2.5 px-2 rounded-2xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-center ${
-                activeTab === 'register'
-                  ? 'bg-white text-nu-900 shadow-sm font-extrabold border border-slate-200/80'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
-              <span>Daftar Baru</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={() => setActiveTab('register')}
+                className={`min-h-[44px] py-2.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-center ${
+                  activeTab === 'register'
+                    ? 'bg-white text-nu-900 shadow-sm font-extrabold border border-slate-200/80'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <span>Daftar UMKM Baru</span>
+              </button>
+            </div>
+          )}
 
           <div className="p-6 sm:p-8">
             
             {/* ========================================================================= */}
-            {/* TAB 1: LOGIN SEBAGAI PELAKU USAHA (MEMBER UMKM)                           */}
-            {/* Kalimat "Ruang Mandiri Pelaku Usaha UMKM..." telah dihapus sesuai request */}
+            {/* PORTAL ADMIN: LOGIN PENGURUS FATAYAT NU (HANYA MUNCUL DI /admin)          */}
             {/* ========================================================================= */}
-            {activeTab === 'member' && (
-              <form onSubmit={handleMemberSubmit} className="space-y-4">
-                
-                {memberError && (
-                  <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
-                    {memberError}
-                  </div>
-                )}
-
-                {/* 1. Pilih Nama Pelaku Usaha */}
-                <div>
-                  <label htmlFor="selectMemberAuth" className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Nama Ibu/Bapak atau Nama Usaha:
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="selectMemberAuth"
-                      value={selectedMemberId}
-                      onChange={(e) => setSelectedMemberId(e.target.value)}
-                      className="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl p-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-pointer"
-                    >
-                      {members.map((m) => (
-                        <option key={m.id} value={m.id}>
-                          {m.nama} &bull; {m.usaha} ({m.kategori})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* 2. Password / PIN Pelaku Usaha */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label htmlFor="memberPasswordInput" className="block text-xs font-bold text-slate-700">
-                      Kata Sandi / PIN Pelaku Usaha:
-                    </label>
-                    <span className="text-[11px] text-slate-400 font-medium">
-                      PIN Standar: <strong className="text-nu-800 font-mono">123456</strong>
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <input
-                      id="memberPasswordInput"
-                      type={showMemberPass ? 'text' : 'password'}
-                      value={memberPassword}
-                      onChange={(e) => setMemberPassword(e.target.value)}
-                      placeholder="Masukkan PIN (standar: 123456)"
-                      className="w-full text-xs sm:text-sm font-mono px-3.5 py-3 rounded-2xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowMemberPass(!showMemberPass)}
-                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
-                    >
-                      {showMemberPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Quick Access Badges for Easy 1-Click Login */}
-                <div className="pt-1">
-                  <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                    Contoh Masuk Cepat (1-Klik):
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <button
-                      type="button"
-                      onClick={() => handleQuickMemberLogin('FTY-001')}
-                      className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
-                    >
-                      <div>
-                        <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
-                          Ibu Siti Aminah
-                        </div>
-                        <div className="text-[11px] text-slate-500">Keripik Tempe Barokah</div>
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleQuickMemberLogin('FTY-002')}
-                      className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
-                    >
-                      <div>
-                        <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
-                          Ibu Faizah
-                        </div>
-                        <div className="text-[11px] text-slate-500">Roti & Pastry Mersi</div>
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-nu-800 hover:bg-nu-900 active:scale-98 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2"
-                  >
-                    <span>Buka Dashboard Mandiri Saya</span>
-                    <ArrowRight className="w-4 h-4 text-amber-300" />
-                  </button>
-                </div>
-
-              </form>
-            )}
-
-            {/* ========================================================================= */}
-            {/* TAB 2: LOGIN SEBAGAI PENGURUS FATAYAT NU (ADMIN AKSES PENUH)               */}
-            {/* ========================================================================= */}
-            {activeTab === 'admin' && (
+            {isAdminPortal ? (
               <form onSubmit={handleAdminSubmit} className="space-y-4">
                 
                 <div className="p-4 bg-nu-50/80 border border-nu-200 rounded-2xl flex items-start gap-3">
@@ -350,7 +261,7 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
                     <strong className="block text-nu-900 font-extrabold mb-0.5">
                       Akses Penuh Pengurus & Pendamping PPH
                     </strong>
-                    Membuka seluruh fitur: <strong>Tab 1 Ringkasan Eksekutif</strong>, monitoring 45 UMKM, grafik status, pemilihan bebas dropdown seluruh anggota, dan cetak berkas audit.
+                    Membuka <strong>Tab 1 Ringkasan Eksekutif</strong>, pemantauan 45 UMKM, grafik status, bebas pilih data seluruh anggota, dan cetak lembar rekapitulasi kelompok.
                   </div>
                 </div>
 
@@ -403,7 +314,7 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
                     className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-nu-800 to-nu-700 hover:from-nu-900 hover:to-nu-800 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2 active:scale-98"
                   >
                     <ShieldCheck className="w-5 h-5 text-amber-300" />
-                    <span>Masuk sebagai Pengurus (Akses Penuh)</span>
+                    <span>Masuk ke Dashboard Eksekutif</span>
                   </button>
                 </div>
 
@@ -422,118 +333,253 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
                 </div>
 
               </form>
-            )}
+            ) : (
+              /* ========================================================================= */
+              /* PORTAL MEMBER: FORM LOGIN & DAFTAR (HANYA MUNCUL DI / ATAU /login)        */
+              /* ========================================================================= */
+              <>
+                {activeTab === 'member' && (
+                  <form onSubmit={handleMemberSubmit} className="space-y-4">
+                    
+                    {memberError && (
+                      <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
+                        {memberError}
+                      </div>
+                    )}
 
-            {/* ========================================================================= */}
-            {/* TAB 3: DAFTAR AKUN BARU (REGISTRASI PESERTA UMKM)                         */}
-            {/* ========================================================================= */}
-            {activeTab === 'register' && (
-              <form onSubmit={handleRegisterSubmit} className="space-y-4">
-                
-                <div className="p-3 bg-amber-50 rounded-2xl border border-amber-300 text-xs text-amber-950 leading-relaxed">
-                  <strong className="block text-amber-900 font-extrabold mb-0.5">
-                    Pendaftaran UMKM Binaan Baru Fatayat NU
-                  </strong>
-                  Isi data usaha Anda di Desa Mersi. Akun akan langsung dibuat dan Anda dapat mulai mengisi draf persyaratan halal.
-                </div>
+                    {/* 1. Pilih Nama Pelaku Usaha */}
+                    <div>
+                      <label htmlFor="selectMemberAuth" className="block text-xs font-bold text-slate-700 mb-1.5">
+                        Nama Ibu/Bapak atau Nama Usaha:
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="selectMemberAuth"
+                          value={selectedMemberId}
+                          onChange={(e) => setSelectedMemberId(e.target.value)}
+                          className="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl p-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-pointer"
+                        >
+                          {members.map((m) => (
+                            <option key={m.id} value={m.id}>
+                              {m.nama} • {m.usaha} ({m.kategori})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-                {regError && (
-                  <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
-                    {regError}
-                  </div>
+                    {/* 2. Password / PIN Pelaku Usaha */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label htmlFor="memberPasswordInput" className="block text-xs font-bold text-slate-700">
+                          Kata Sandi / PIN Pelaku Usaha:
+                        </label>
+                        <span className="text-[11px] text-slate-400 font-medium">
+                          PIN Standar: <strong className="text-nu-800 font-mono">123456</strong>
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <input
+                          id="memberPasswordInput"
+                          type={showMemberPass ? 'text' : 'password'}
+                          value={memberPassword}
+                          onChange={(e) => setMemberPassword(e.target.value)}
+                          placeholder="Masukkan PIN (standar: 123456)"
+                          className="w-full text-xs sm:text-sm font-mono px-3.5 py-3 rounded-2xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none pr-10"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowMemberPass(!showMemberPass)}
+                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
+                        >
+                          {showMemberPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quick Access Badges for Easy 1-Click Login */}
+                    <div className="pt-1">
+                      <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Contoh Masuk Cepat (1-Klik):
+                      </span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <button
+                          type="button"
+                          onClick={() => handleQuickMemberLogin('FTY-001')}
+                          className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
+                        >
+                          <div>
+                            <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
+                              Ibu Siti Aminah
+                            </div>
+                            <div className="text-[11px] text-slate-500">Keripik Tempe Barokah</div>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleQuickMemberLogin('FTY-002')}
+                          className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
+                        >
+                          <div>
+                            <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
+                              Ibu Faizah
+                            </div>
+                            <div className="text-[11px] text-slate-500">Roti & Pastry Mersi</div>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-nu-800 hover:bg-nu-900 active:scale-98 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2"
+                      >
+                        <span>Buka Dashboard Mandiri Saya</span>
+                        <ArrowRight className="w-4 h-4 text-amber-300" />
+                      </button>
+                    </div>
+
+                  </form>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      Nama Lengkap Pemilik:
-                    </label>
-                    <input
-                      type="text"
-                      value={regForm.nama}
-                      onChange={(e) => setRegForm({ ...regForm, nama: e.target.value })}
-                      placeholder="contoh: Ibu Nurul Hidayah"
-                      className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
-                      required
-                    />
-                  </div>
+                {/* FORM REGISTRASI ANGGOTA BARU */}
+                {activeTab === 'register' && (
+                  <form onSubmit={handleRegisterSubmit} className="space-y-4">
+                    
+                    <div className="p-3 bg-amber-50 rounded-2xl border border-amber-300 text-xs text-amber-950 leading-relaxed">
+                      <strong className="block text-amber-900 font-extrabold mb-0.5">
+                        Pendaftaran UMKM Binaan Baru Fatayat NU
+                      </strong>
+                      Isi data usaha Anda di Desa Mersi. Akun akan langsung dibuat dan Anda dapat mulai mengisi draf persyaratan halal.
+                    </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      Nama Usaha / Merek:
-                    </label>
-                    <input
-                      type="text"
-                      value={regForm.usaha}
-                      onChange={(e) => setRegForm({ ...regForm, usaha: e.target.value })}
-                      placeholder="contoh: Sambel Roa Mersi"
-                      className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
-                      required
-                    />
-                  </div>
-                </div>
+                    {regError && (
+                      <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
+                        {regError}
+                      </div>
+                    )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      Kategori Produk:
-                    </label>
-                    <select
-                      value={regForm.kategori}
-                      onChange={(e) => setRegForm({ ...regForm, kategori: e.target.value })}
-                      className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Nama Lengkap Pemilik:
+                        </label>
+                        <input
+                          type="text"
+                          value={regForm.nama}
+                          onChange={(e) => setRegForm({ ...regForm, nama: e.target.value })}
+                          placeholder="contoh: Ibu Nurul Hidayah"
+                          className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Nama Usaha / Merek:
+                        </label>
+                        <input
+                          type="text"
+                          value={regForm.usaha}
+                          onChange={(e) => setRegForm({ ...regForm, usaha: e.target.value })}
+                          placeholder="contoh: Sambel Roa Mersi"
+                          className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Kategori Produk:
+                        </label>
+                        <select
+                          value={regForm.kategori}
+                          onChange={(e) => setRegForm({ ...regForm, kategori: e.target.value })}
+                          className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                        >
+                          <option value="Kudapan Kering">Kudapan Kering / Keripik</option>
+                          <option value="Makanan Basah">Makanan Basah / Roti</option>
+                          <option value="Minuman">Minuman Segar / Jamu</option>
+                          <option value="Olahan Sambal">Olahan Sambal / Bumbu</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Nomor WhatsApp Aktif:
+                        </label>
+                        <input
+                          type="text"
+                          value={regForm.kontak}
+                          onChange={(e) => setRegForm({ ...regForm, kontak: e.target.value })}
+                          placeholder="081234567899"
+                          className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Alamat Dapur / Produksi di Desa Mersi:
+                      </label>
+                      <input
+                        type="text"
+                        value={regForm.alamat}
+                        onChange={(e) => setRegForm({ ...regForm, alamat: e.target.value })}
+                        placeholder="contoh: RT 03 RW 02 Desa Mersi, Purwokerto Timur"
+                        className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-nu-800 hover:bg-nu-900 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2 active:scale-98"
                     >
-                      <option value="Kudapan Kering">Kudapan Kering / Keripik</option>
-                      <option value="Makanan Basah">Makanan Basah / Roti</option>
-                      <option value="Minuman">Minuman Segar / Jamu</option>
-                      <option value="Olahan Sambal">Olahan Sambal / Bumbu</option>
-                    </select>
-                  </div>
+                      <Sparkles className="w-4 h-4 text-amber-300" />
+                      <span>Daftarkan Usaha & Buka Dashboard Mandiri</span>
+                    </button>
 
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      Nomor WhatsApp Aktif:
-                    </label>
-                    <input
-                      type="text"
-                      value={regForm.kontak}
-                      onChange={(e) => setRegForm({ ...regForm, kontak: e.target.value })}
-                      placeholder="081234567899"
-                      className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Alamat Dapur / Produksi di Desa Mersi:
-                  </label>
-                  <input
-                    type="text"
-                    value={regForm.alamat}
-                    onChange={(e) => setRegForm({ ...regForm, alamat: e.target.value })}
-                    placeholder="contoh: RT 03 RW 02 Desa Mersi, Purwokerto Timur"
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-nu-800 hover:bg-nu-900 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2 active:scale-98"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Daftarkan Usaha & Buka Dashboard Mandiri</span>
-                </button>
-
-              </form>
+                  </form>
+                )}
+              </>
             )}
 
           </div>
 
           {/* Footer of Card */}
-          <div className="bg-slate-50 px-6 py-4 border-t border-slate-200 text-center text-xs text-slate-500 flex items-center justify-center gap-2">
-            <HeartHandshake className="w-4 h-4 text-nu-700" />
-            <span>Fasilitasi Sertifikasi Halal Gratis (SEHATI) Fatayat NU Banyumas</span>
+          <div className="bg-slate-50 px-6 py-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <div className="flex items-center gap-2">
+              <HeartHandshake className="w-4 h-4 text-nu-700" />
+              <span>Fasilitasi Sertifikasi Halal Gratis (SEHATI) Fatayat NU Banyumas</span>
+            </div>
+
+            {/* SWITCH PORTAL LINK */}
+            {isAdminPortal ? (
+              <button
+                type="button"
+                onClick={() => onSwitchPortal && onSwitchPortal('member')}
+                className="font-bold text-nu-800 hover:text-nu-950 flex items-center gap-1 hover:underline"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Ke Portal Pelaku Usaha</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onSwitchPortal && onSwitchPortal('admin')}
+                className="font-bold text-slate-500 hover:text-nu-800 flex items-center gap-1 hover:underline text-[11px]"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-nu-700" />
+                <span>Portal Khusus Pengurus</span>
+              </button>
+            )}
           </div>
 
         </div>

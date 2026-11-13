@@ -109,3 +109,147 @@ export function recalculateMemberClient(member) {
 
   return m;
 }
+
+export function calculateStatsClient(members = []) {
+  const total = members.length;
+  if (total === 0) {
+    return {
+      total: 0,
+      siap_daftar: 0,
+      pendampingan: 0,
+      belum_siap: 0,
+      siap_daftar_pct: 0,
+      pendampingan_pct: 0,
+      belum_siap_pct: 0
+    };
+  }
+
+  let siap = 0;
+  let pendampingan = 0;
+  let belum = 0;
+
+  members.forEach((m) => {
+    if (m.skor >= 80) siap++;
+    else if (m.skor >= 50) pendampingan++;
+    else belum++;
+  });
+
+  const calcPct = (count) => Math.round((count * 100) / total);
+
+  return {
+    total,
+    siap_daftar: siap,
+    pendampingan,
+    belum_siap: belum,
+    siap_daftar_pct: calcPct(siap),
+    pendampingan_pct: calcPct(pendampingan),
+    belum_siap_pct: calcPct(belum)
+  };
+}
+
+export function calculateBottlenecksClient(members = []) {
+  const total = members.length;
+  if (total === 0) return [];
+
+  let nibCount = 0;
+  let bumbuCount = 0;
+  let sjphCount = 0;
+  let sihalalCount = 0;
+  let ikrarCount = 0;
+
+  members.forEach((m) => {
+    const nibStr = String(m.nib || '').trim();
+    const hasValidNib = Boolean(nibStr && nibStr !== '-' && nibStr.length >= 9);
+    if (!hasValidNib) nibCount++;
+    if (!m.bahan_kritis_halal) bumbuCount++;
+    if (!m.manual_sjph) sjphCount++;
+    if (!m.sihalal) sihalalCount++;
+    if (!m.ikrar_materai) ikrarCount++;
+  });
+
+  const calcPct = (count) => Math.round((count * 100) / total);
+
+  return [
+    {
+      label: 'NIB Belum Ada / Belum OSS-RBA',
+      percent: calcPct(nibCount),
+      count: nibCount,
+      color: 'from-red-500 to-rose-600',
+      dot: 'bg-red-500',
+      note: 'Perlu fasilitasi pendampingan pembuatan akun OSS di balai desa.'
+    },
+    {
+      label: 'Bukti Halal Bumbu Olahan Belum Lengkap',
+      percent: calcPct(bumbuCount),
+      count: bumbuCount,
+      color: 'from-amber-500 to-orange-500',
+      dot: 'bg-amber-500',
+      note: 'Pengumpulan foto kemasan / nomor sertifikat halal bahan pabrikan.'
+    },
+    {
+      label: 'Belum Ada Manual SJPH Tertulis (SOP PPH)',
+      percent: calcPct(sjphCount),
+      count: sjphCount,
+      color: 'from-yellow-400 to-amber-500',
+      dot: 'bg-yellow-500',
+      note: 'Dibantu dengan formulir template SJPH standar Fatayat NU.'
+    },
+    {
+      label: 'Akun SIHALAL Belum Aktif (ptsp.halal.go.id)',
+      percent: calcPct(sihalalCount),
+      count: sihalalCount,
+      color: 'from-blue-500 to-indigo-600',
+      dot: 'bg-blue-500',
+      note: 'Registrasi email pemilik usaha dan sinkronisasi data NIB.'
+    },
+    {
+      label: 'Belum Tanda Tangan Surat Ikrar Halal Bermaterai',
+      percent: calcPct(ikrarCount),
+      count: ikrarCount,
+      color: 'from-emerald-500 to-green-700',
+      dot: 'bg-emerald-500',
+      note: 'Pemberian materai Rp10.000 dan penandatanganan kolektif ranting.'
+    }
+  ];
+}
+
+export function calculateCategoriesClient(members = []) {
+  const total = members.length;
+  if (total === 0) {
+    return {
+      labels: ['Kudapan Kering', 'Makanan Basah', 'Minuman'],
+      data: [0, 0, 0],
+      percentages: [0, 0, 0],
+      colors: ['#1E4D2B', '#D97706', '#3B82F6']
+    };
+  }
+
+  let kudapan = 0;
+  let basah = 0;
+  let minuman = 0;
+
+  members.forEach((m) => {
+    switch (m.kategori) {
+      case 'Kudapan Kering':
+        kudapan++;
+        break;
+      case 'Makanan Basah':
+        basah++;
+        break;
+      case 'Minuman':
+        minuman++;
+        break;
+      default:
+        break;
+    }
+  });
+
+  const calcPct = (count) => Math.round((count * 100) / total);
+
+  return {
+    labels: ['Kudapan Kering', 'Makanan Basah', 'Minuman'],
+    data: [kudapan, basah, minuman],
+    percentages: [calcPct(kudapan), calcPct(basah), calcPct(minuman)],
+    colors: ['#1E4D2B', '#D97706', '#3B82F6']
+  };
+}

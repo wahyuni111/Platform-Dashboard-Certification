@@ -68,7 +68,7 @@ export default function Header({
                     Profil Mandiri Anda:
                   </div>
                   <div className="text-xs font-black text-nu-900 truncate max-w-[150px] sm:max-w-[220px]">
-                    {activeMemberObj?.nama || currentUser?.userName} &bull; {activeMemberObj?.usaha || currentUser?.businessName}
+                    {activeMemberObj?.nama || currentUser?.userName} • {activeMemberObj?.usaha || currentUser?.businessName}
                   </div>
                 </div>
               </div>
@@ -84,7 +84,7 @@ export default function Header({
                   >
                     {members.map(m => (
                       <option key={m.id} value={m.id}>
-                        [{m.id}] {m.nama} &bull; {m.usaha}
+                        [{m.id}] {m.nama} • {m.usaha}
                       </option>
                     ))}
                   </select>
