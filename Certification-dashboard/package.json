@@ -10,7 +10,9 @@
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && go run main.go",
     "dev:backend-py": "cd backend-py && python3 -m uvicorn main:app --reload --port 8080",
-    "build": "cd frontend && npm run build && cd ../backend && go build -o server main.go",
+    "build": "cd frontend && npm run build",
+    "build:all": "cd frontend && npm run build && cd ../backend && go build -o server main.go",
+    "build:backend": "cd backend && go run main.go",
     "install:all": "npm install && cd frontend && npm install",
     "postinstall": "cd frontend && npm install"
   },
@@ -30,5 +32,8 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^10.0.6"
+  },
+  "dependencies": {
+    "i": "^0.3.7"
   }
 }

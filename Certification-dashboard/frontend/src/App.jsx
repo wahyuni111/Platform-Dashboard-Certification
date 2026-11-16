@@ -21,7 +21,19 @@ import {
 
 const AUTH_STORAGE_KEY = 'simhalal_auth_session';
 
+function detectInitialPortal() {
+  if (typeof window === 'undefined') return 'member';
+  const path = window.location.pathname.toLowerCase();
+  const host = window.location.hostname.toLowerCase();
+  if (host.startsWith('admin.') || host.startsWith('admin-')) return 'admin';
+  if (path.startsWith('/admin') || path.startsWith('/pengurus')) return 'admin';
+  return 'member';
+}
+
 export default function App() {
+  // Portal route state: 'member' (/) or 'admin' (/admin)
+  const [currentPortal, setCurrentPortal] = useState(detectInitialPortal);
+
   // Authentication session state: null (not logged in), { role: 'admin'|'member', memberId, userName, businessName }
   const [authSession, setAuthSession] = useState(() => {
     try {
@@ -201,6 +213,31 @@ export default function App() {
     }
   }, [authSession, selectedMemberId, activeTab]);
 
+  // Sync portal changes with browser history & URL
+  useEffect(() => {
+    const onPopState = () => {
+      setCurrentPortal(detectInitialPortal());
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  // Switch between portal Pelaku Usaha (/) and Portal Pengurus (/admin)
+  const handleSwitchPortal = (targetPortal) => {
+    const targetPath = targetPortal === 'admin' ? '/admin' : '/';
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({}, '', targetPath);
+    }
+    setCurrentPortal(targetPortal);
+  };
+
+  // Restrict member from viewing /admin portal
+  useEffect(() => {
+    if (authSession?.role === 'member' && currentPortal === 'admin') {
+      handleSwitchPortal('member');
+    }
+  }, [authSession, currentPortal]);
+
   // Handle Login
   const handleLogin = (sessionData) => {
     setAuthSession(sessionData);
@@ -211,17 +248,26 @@ export default function App() {
     if (sessionData.role === 'member') {
       setSelectedMemberId(sessionData.memberId);
       setActiveTab('detail');
+      handleSwitchPortal('member');
     } else {
       setActiveTab('summary');
+      handleSwitchPortal('admin');
     }
   };
 
   // Handle Logout
   const handleLogout = () => {
+    const prevRole = authSession?.role;
     setAuthSession(null);
     try {
       localStorage.removeItem(AUTH_STORAGE_KEY);
     } catch (e) {}
+
+    if (prevRole === 'admin') {
+      handleSwitchPortal('admin');
+    } else {
+      handleSwitchPortal('member');
+    }
   };
 
   // Handle Register New Member
@@ -345,10 +391,12 @@ export default function App() {
     window.print();
   };
 
-  // If not logged in, render the Auth Page first
+  // If not logged in, render the Auth Page with separated Portal View
   if (!authSession) {
     return (
       <AuthPage
+        portalType={currentPortal}
+        onSwitchPortal={handleSwitchPortal}
         members={members}
         onLogin={handleLogin}
         onRegisterNewMember={handleRegisterNewMember}
@@ -419,7 +467,7 @@ export default function App() {
             <span>PR Fatayat NU Desa Mersi, Purwokerto Timur</span>
           </div>
           <div className="text-slate-400">
-            Sains Data untuk Masyarakat (SDUM) 2026 &bull; Akses: {authSession?.role === 'admin' ? 'Pengurus Fatayat NU' : `Anggota UMKM (${authSession?.userName})`}
+            Sains Data untuk Masyarakat (SDUM) 2026 • Akses: {authSession?.role === 'admin' ? 'Pengurus Fatayat NU' : `Anggota UMKM (${authSession?.userName})`}
           </div>
         </div>
       </footer>
