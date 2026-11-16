@@ -17,16 +17,13 @@ import {
   Eye,
   EyeOff,
   KeyRound,
-<<<<<<< HEAD
   Search,
   ChevronDown,
   ChevronUp,
   X,
   Check,
-  Store
-=======
+  Store,
   ArrowLeft
->>>>>>> f3f8d4ca5be3d6b2da520b5e78c0ebaa6439d5a5
 } from 'lucide-react';
 
 export default function AuthPage({
@@ -331,13 +328,95 @@ export default function AuthPage({
           )}
 
           <div className="p-6 sm:p-8">
-            
-            {/* ========================================================================= */}
-            {/* PORTAL ADMIN: LOGIN PENGURUS FATAYAT NU (HANYA MUNCUL DI /admin)          */}
-            {/* ========================================================================= */}
-<<<<<<< HEAD
-            {activeTab === 'member' && (
-              <form onSubmit={handleMemberSubmit} className="space-y-4">
+            {isAdminPortal ? (
+              /* ========================================================================= */
+              /* PORTAL ADMIN: LOGIN PENGURUS FATAYAT NU (HANYA MUNCUL DI /admin)          */
+              /* ========================================================================= */
+              <form onSubmit={handleAdminSubmit} className="space-y-4">
+                <div className="p-4 bg-nu-50/80 border border-nu-200 rounded-2xl flex items-start gap-3">
+                  <ShieldCheck className="w-5 h-5 text-nu-800 flex-shrink-0 mt-0.5" />
+                  <div className="text-xs text-nu-950 leading-relaxed">
+                    <strong className="block text-nu-900 font-extrabold mb-0.5">
+                      Akses Penuh Pengurus &amp; Pendamping PPH
+                    </strong>
+                    Membuka <strong>Tab 1 Ringkasan Eksekutif</strong>, pemantauan 45 UMKM, grafik status, bebas pilih data seluruh anggota, dan cetak lembar rekapitulasi kelompok.
+                  </div>
+                </div>
+
+                {adminError && (
+                  <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
+                    {adminError}
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Username / Email Pengurus:
+                  </label>
+                  <input
+                    type="text"
+                    value={adminUsername}
+                    onChange={(e) => setAdminUsername(e.target.value)}
+                    placeholder="misal: pengurus.mersi"
+                    className="w-full text-xs sm:text-sm px-3.5 py-3 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Kata Sandi / PIN Pengurus:
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showAdminPass ? 'text' : 'password'}
+                      value={adminPassword}
+                      onChange={(e) => setAdminPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full text-xs sm:text-sm px-3.5 py-3 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowAdminPass(!showAdminPass)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
+                    >
+                      {showAdminPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-nu-800 to-nu-700 hover:from-nu-900 hover:to-nu-800 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2 active:scale-98"
+                  >
+                    <ShieldCheck className="w-5 h-5 text-amber-300" />
+                    <span>Masuk ke Dashboard Eksekutif</span>
+                  </button>
+                </div>
+
+                <div className="text-center pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdminUsername('pengurus.mersi');
+                      setAdminPassword('fatayat2026');
+                      handleAdminSubmit();
+                    }}
+                    className="text-xs font-bold text-nu-800 hover:text-nu-900 underline"
+                  >
+                    Klik di Sini untuk Masuk Cepat (Mode Demo Pengurus)
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* ========================================================================= */
+              /* PORTAL MEMBER: FORM LOGIN & DAFTAR (HANYA MUNCUL DI / ATAU /login)        */
+              /* ========================================================================= */
+              <>
+                {activeTab === 'member' && (
+                  <form onSubmit={handleMemberSubmit} className="space-y-4">
                 
                 {memberError && (
                   <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
@@ -566,208 +645,7 @@ export default function AuthPage({
               </form>
             )}
 
-            {/* ========================================================================= */}
-            {/* TAB 2: LOGIN SEBAGAI PENGURUS FATAYAT NU (ADMIN AKSES PENUH)               */}
-            {/* ========================================================================= */}
-            {activeTab === 'admin' && (
-=======
-            {isAdminPortal ? (
->>>>>>> f3f8d4ca5be3d6b2da520b5e78c0ebaa6439d5a5
-              <form onSubmit={handleAdminSubmit} className="space-y-4">
-                
-                <div className="p-4 bg-nu-50/80 border border-nu-200 rounded-2xl flex items-start gap-3">
-                  <ShieldCheck className="w-5 h-5 text-nu-800 flex-shrink-0 mt-0.5" />
-                  <div className="text-xs text-nu-950 leading-relaxed">
-                    <strong className="block text-nu-900 font-extrabold mb-0.5">
-                      Akses Penuh Pengurus & Pendamping PPH
-                    </strong>
-                    Membuka <strong>Tab 1 Ringkasan Eksekutif</strong>, pemantauan 45 UMKM, grafik status, bebas pilih data seluruh anggota, dan cetak lembar rekapitulasi kelompok.
-                  </div>
-                </div>
-
-                {adminError && (
-                  <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
-                    {adminError}
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Username / Email Pengurus:
-                  </label>
-                  <input
-                    type="text"
-                    value={adminUsername}
-                    onChange={(e) => setAdminUsername(e.target.value)}
-                    placeholder="misal: pengurus.mersi"
-                    className="w-full text-xs sm:text-sm px-3.5 py-3 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Kata Sandi / PIN Pengurus:
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showAdminPass ? 'text' : 'password'}
-                      value={adminPassword}
-                      onChange={(e) => setAdminPassword(e.target.value)}
-                      placeholder="••••••••"
-                      className="w-full text-xs sm:text-sm px-3.5 py-3 rounded-xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowAdminPass(!showAdminPass)}
-                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
-                    >
-                      {showAdminPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-nu-800 to-nu-700 hover:from-nu-900 hover:to-nu-800 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2 active:scale-98"
-                  >
-                    <ShieldCheck className="w-5 h-5 text-amber-300" />
-                    <span>Masuk ke Dashboard Eksekutif</span>
-                  </button>
-                </div>
-
-                <div className="text-center pt-1">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAdminUsername('pengurus.mersi');
-                      setAdminPassword('fatayat2026');
-                      handleAdminSubmit();
-                    }}
-                    className="text-xs font-bold text-nu-800 hover:text-nu-900 underline"
-                  >
-                    Klik di Sini untuk Masuk Cepat (Mode Demo Pengurus)
-                  </button>
-                </div>
-
-              </form>
-            ) : (
-              /* ========================================================================= */
-              /* PORTAL MEMBER: FORM LOGIN & DAFTAR (HANYA MUNCUL DI / ATAU /login)        */
-              /* ========================================================================= */
-              <>
-                {activeTab === 'member' && (
-                  <form onSubmit={handleMemberSubmit} className="space-y-4">
-                    
-                    {memberError && (
-                      <div className="p-3 bg-red-50 text-red-700 text-xs font-semibold rounded-xl border border-red-200">
-                        {memberError}
-                      </div>
-                    )}
-
-                    {/* 1. Pilih Nama Pelaku Usaha */}
-                    <div>
-                      <label htmlFor="selectMemberAuth" className="block text-xs font-bold text-slate-700 mb-1.5">
-                        Nama Ibu/Bapak atau Nama Usaha:
-                      </label>
-                      <div className="relative">
-                        <select
-                          id="selectMemberAuth"
-                          value={selectedMemberId}
-                          onChange={(e) => setSelectedMemberId(e.target.value)}
-                          className="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl p-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-pointer"
-                        >
-                          {members.map((m) => (
-                            <option key={m.id} value={m.id}>
-                              {m.nama} • {m.usaha} ({m.kategori})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* 2. Password / PIN Pelaku Usaha */}
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label htmlFor="memberPasswordInput" className="block text-xs font-bold text-slate-700">
-                          Kata Sandi / PIN Pelaku Usaha:
-                        </label>
-                        <span className="text-[11px] text-slate-400 font-medium">
-                          PIN Standar: <strong className="text-nu-800 font-mono">123456</strong>
-                        </span>
-                      </div>
-                      <div className="relative">
-                        <input
-                          id="memberPasswordInput"
-                          type={showMemberPass ? 'text' : 'password'}
-                          value={memberPassword}
-                          onChange={(e) => setMemberPassword(e.target.value)}
-                          placeholder="Masukkan PIN (standar: 123456)"
-                          className="w-full text-xs sm:text-sm font-mono px-3.5 py-3 rounded-2xl border border-slate-300 focus:border-nu-700 focus:ring-2 focus:ring-nu-700/20 outline-none pr-10"
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowMemberPass(!showMemberPass)}
-                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
-                        >
-                          {showMemberPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Quick Access Badges for Easy 1-Click Login */}
-                    <div className="pt-1">
-                      <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                        Contoh Masuk Cepat (1-Klik):
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        <button
-                          type="button"
-                          onClick={() => handleQuickMemberLogin('FTY-001')}
-                          className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
-                        >
-                          <div>
-                            <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
-                              Ibu Siti Aminah
-                            </div>
-                            <div className="text-[11px] text-slate-500">Keripik Tempe Barokah</div>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => handleQuickMemberLogin('FTY-002')}
-                          className="min-h-[44px] text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all flex items-center justify-between group"
-                        >
-                          <div>
-                            <div className="font-extrabold text-slate-900 group-hover:text-emerald-800">
-                              Ibu Faizah
-                            </div>
-                            <div className="text-[11px] text-slate-500">Roti & Pastry Mersi</div>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        className="w-full min-h-[48px] py-3.5 px-6 rounded-2xl bg-nu-800 hover:bg-nu-900 active:scale-98 text-white font-black text-sm transition-all shadow-md shadow-nu-900/20 flex items-center justify-center gap-2"
-                      >
-                        <span>Buka Dashboard Mandiri Saya</span>
-                        <ArrowRight className="w-4 h-4 text-amber-300" />
-                      </button>
-                    </div>
-
-                  </form>
-                )}
-
-                {/* FORM REGISTRASI ANGGOTA BARU */}
+            {/* FORM REGISTRASI ANGGOTA BARU */}
                 {activeTab === 'register' && (
                   <form onSubmit={handleRegisterSubmit} className="space-y-4">
                     
