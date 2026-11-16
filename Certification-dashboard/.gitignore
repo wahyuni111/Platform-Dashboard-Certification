@@ -19,3 +19,6 @@ __pycache__/
 venv/
 */venv/
 .pytest_cache/
+test-*.js
+generate-b64.py
+update-detail-view.py

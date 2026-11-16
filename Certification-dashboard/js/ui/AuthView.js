@@ -107,16 +107,78 @@ class AuthView {
               <!-- ------------------------------------------------------------- -->
               <div id="authContentMember" class="${this.activeTab === 'member' ? '' : 'hidden'} space-y-4">
                 
-                <!-- 1. Pilih Nama Pelaku Usaha -->
-                <div>
-                  <label for="authSelectMember" class="block text-xs font-bold text-slate-700 mb-1.5">
-                    Pilih Nama Ibu/Bapak atau Nama Usaha:
-                  </label>
-                  <select id="authSelectMember" class="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl p-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-pointer">
-                    ${members.map(m => `
-                      <option value="${m.id}">[${m.id}] ${m.nama} &bull; ${m.usaha} (${m.kategori})</option>
-                    `).join('')}
-                  </select>
+                <!-- 1. Pilih / Ketik Nama Pelaku Usaha (Searchable Combobox) -->
+                <div class="relative" id="authComboboxWrapper">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="authMemberSearchInput" class="block text-xs font-bold text-slate-700">
+                      Nama Ibu/Bapak atau Nama Usaha:
+                    </label>
+                    <span class="text-[11px] text-nu-800 font-semibold flex items-center gap-1">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Bisa diketik &amp; diklik (${members.length} UMKM)
+                    </span>
+                  </div>
+
+                  <!-- Kotak Input Pencarian & Pilihan Dropdown -->
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+
+                    <input
+                      type="text"
+                      id="authMemberSearchInput"
+                      value="${members[0] ? `${members[0].nama} • ${members[0].usaha}` : ''}"
+                      placeholder="Ketik nama Ibu/Bapak atau nama usaha..."
+                      autocomplete="off"
+                      class="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl pl-10 pr-20 py-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-text shadow-sm"
+                    />
+
+                    <!-- Tombol Kanan: Tombol Hapus (X) + Tombol Panah Buka Dropdown -->
+                    <div class="absolute inset-y-0 right-0 pr-2 flex items-center gap-1">
+                      <button
+                        type="button"
+                        id="authMemberClearBtn"
+                        class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-lg transition-all"
+                        title="Hapus ketikan"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </button>
+                      <button
+                        type="button"
+                        id="authMemberToggleDropdownBtn"
+                        class="p-2 text-nu-800 hover:bg-nu-100/80 rounded-xl transition-all cursor-pointer flex items-center justify-center"
+                        title="Buka / Tutup daftar pilihan"
+                      >
+                        <svg id="authMemberChevronIcon" class="w-5 h-5 text-nu-800 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Dropdown Menu List Hasil Pencarian / Seluruh Anggota -->
+                  <div id="authMemberDropdownList" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+                    <div class="px-3.5 py-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center justify-between text-[11px] text-slate-600 font-bold">
+                      <span>Pilih nama usaha Anda dari daftar:</span>
+                      <span id="authMemberCountBadge" class="bg-white px-2 py-0.5 rounded-full border border-slate-200 text-nu-800">
+                        ${members.length} UMKM ditemukan
+                      </span>
+                    </div>
+
+                    <div id="authMemberItemsContainer" class="max-h-60 overflow-y-auto divide-y divide-slate-100">
+                      <!-- Rendered by JS -->
+                    </div>
+                  </div>
+
+                  <!-- Badge Pelaku Usaha Terpilih Saat Ini -->
+                  <div id="authMemberSelectedBadge" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-emerald-900 bg-emerald-50/90 border border-emerald-200 rounded-xl px-2.5 py-1">
+                    <svg class="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <span id="authMemberSelectedText" class="truncate">
+                      Terpilih: <strong>${members[0]?.nama || ''}</strong> (${members[0]?.usaha || ''})
+                    </span>
+                  </div>
+
+                  <!-- Hidden Input untuk menyimpan ID terpilih -->
+                  <input type="hidden" id="authSelectMember" value="${members[0]?.id || 'FTY-001'}" />
                 </div>
 
                 <!-- 2. Password / PIN Pelaku Usaha -->
@@ -384,6 +446,176 @@ class AuthView {
     if (tabAdminBtn) tabAdminBtn.onclick = () => switchAuthTab("admin");
     if (tabRegisterBtn) tabRegisterBtn.onclick = () => switchAuthTab("register");
 
+    // =========================================================================
+    // SEARCHABLE COMBOBOX PELAKU USAHA (BISA DIKETIK & BISA DIKLIK DROPDOWN)
+    // =========================================================================
+    const searchInput = document.getElementById("authMemberSearchInput");
+    const dropdownList = document.getElementById("authMemberDropdownList");
+    const toggleDropdownBtn = document.getElementById("authMemberToggleDropdownBtn");
+    const chevronIcon = document.getElementById("authMemberChevronIcon");
+    const clearBtn = document.getElementById("authMemberClearBtn");
+    const itemsContainer = document.getElementById("authMemberItemsContainer");
+    const countBadge = document.getElementById("authMemberCountBadge");
+    const selectedText = document.getElementById("authMemberSelectedText");
+    const hiddenMemberInput = document.getElementById("authSelectMember");
+    const comboboxWrapper = document.getElementById("authComboboxWrapper");
+
+    const selectMemberItem = (chosen) => {
+      if (!chosen) return;
+      if (hiddenMemberInput) hiddenMemberInput.value = chosen.id;
+      if (searchInput) searchInput.value = `${chosen.nama} • ${chosen.usaha}`;
+      if (selectedText) {
+        selectedText.innerHTML = `Terpilih: <strong>${chosen.nama}</strong> (${chosen.usaha})`;
+      }
+      closeDropdown();
+    };
+
+    const renderComboboxItems = (filtered) => {
+      if (!itemsContainer) return;
+      if (countBadge) {
+        countBadge.textContent = `${filtered.length} UMKM ditemukan`;
+      }
+
+      if (filtered.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="p-4 text-center">
+            <p class="text-xs text-slate-600 mb-2">
+              Nama &ldquo;<span class="font-bold text-slate-900">${searchInput ? searchInput.value : ''}</span>&rdquo; tidak ditemukan.
+            </p>
+            <button
+              type="button"
+              id="authBtnGoRegister"
+              class="text-xs font-bold text-nu-800 hover:text-nu-900 underline"
+            >
+              + Daftarkan Usaha Baru di Sini
+            </button>
+          </div>
+        `;
+        const btnGoReg = document.getElementById("authBtnGoRegister");
+        if (btnGoReg) {
+          btnGoReg.onclick = () => {
+            closeDropdown();
+            switchAuthTab("register");
+          };
+        }
+        return;
+      }
+
+      const currentSelectedId = hiddenMemberInput ? hiddenMemberInput.value : "";
+      itemsContainer.innerHTML = filtered.map(m => {
+        const isSelected = m.id === currentSelectedId;
+        return `
+          <button
+            type="button"
+            data-member-id="${m.id}"
+            class="auth-member-item w-full min-h-[48px] px-3.5 py-2.5 text-left flex items-center justify-between gap-2.5 transition-all hover:bg-emerald-50/80 cursor-pointer ${
+              isSelected ? 'bg-emerald-50 text-emerald-950 font-black' : 'text-slate-800'
+            }"
+          >
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="font-mono text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 flex-shrink-0">
+                ${m.id}
+              </span>
+              <div class="min-w-0">
+                <div class="text-xs sm:text-sm font-bold truncate">
+                  ${m.nama}
+                </div>
+                <div class="text-[11px] text-slate-500 truncate">
+                  ${m.usaha} &bull; <span class="text-emerald-700 font-semibold">${m.kategori || ''}</span>
+                </div>
+              </div>
+            </div>
+
+            ${isSelected ? `
+              <div class="flex items-center gap-1 text-emerald-700 text-xs font-bold flex-shrink-0">
+                <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="hidden sm:inline">Terpilih</span>
+              </div>
+            ` : ''}
+          </button>
+        `;
+      }).join('');
+
+      itemsContainer.querySelectorAll(".auth-member-item").forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.getAttribute("data-member-id");
+          const chosen = members.find(m => m.id === id);
+          if (chosen) {
+            selectMemberItem(chosen);
+          }
+        };
+      });
+    };
+
+    const filterAndRender = () => {
+      const q = (searchInput?.value || "").toLowerCase().trim();
+      if (!q) {
+        renderComboboxItems(members);
+        return;
+      }
+      const filtered = members.filter(m => {
+        const matchName = m.nama && m.nama.toLowerCase().includes(q);
+        const matchUsaha = m.usaha && m.usaha.toLowerCase().includes(q);
+        const matchId = m.id && m.id.toLowerCase().includes(q);
+        const matchKat = m.kategori && m.kategori.toLowerCase().includes(q);
+        return matchName || matchUsaha || matchId || matchKat;
+      });
+      renderComboboxItems(filtered);
+    };
+
+    const openDropdown = () => {
+      if (dropdownList) dropdownList.classList.remove("hidden");
+      if (chevronIcon) chevronIcon.classList.add("rotate-180");
+      filterAndRender();
+    };
+
+    const closeDropdown = () => {
+      if (dropdownList) dropdownList.classList.add("hidden");
+      if (chevronIcon) chevronIcon.classList.remove("rotate-180");
+    };
+
+    if (searchInput) {
+      searchInput.oninput = () => {
+        openDropdown();
+        filterAndRender();
+      };
+      searchInput.onfocus = () => {
+        openDropdown();
+      };
+    }
+
+    if (toggleDropdownBtn) {
+      toggleDropdownBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (dropdownList && dropdownList.classList.contains("hidden")) {
+          openDropdown();
+        } else {
+          closeDropdown();
+        }
+      };
+    }
+
+    if (clearBtn) {
+      clearBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (searchInput) {
+          searchInput.value = "";
+          searchInput.focus();
+          openDropdown();
+        }
+      };
+    }
+
+    // Menutup dropdown jika user klik di luar area combobox
+    document.addEventListener("click", (e) => {
+      if (comboboxWrapper && !comboboxWrapper.contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    // Inisialisasi daftar awal
+    renderComboboxItems(members);
+
     // Toggle Password Visibility
     const passInput = document.getElementById("authMemberPassword");
     const togglePassBtn = document.getElementById("authMemberTogglePass");
@@ -396,8 +628,7 @@ class AuthView {
 
     // Login Member Submit
     const btnSubmitMember = document.getElementById("btnSubmitMemberLogin");
-    const selectMember = document.getElementById("authSelectMember");
-    if (btnSubmitMember && selectMember) {
+    if (btnSubmitMember && hiddenMemberInput) {
       btnSubmitMember.onclick = () => {
         const passVal = passInput ? passInput.value.trim() : "";
         if (!passVal) {
@@ -406,8 +637,12 @@ class AuthView {
           return;
         }
 
-        const memberId = selectMember.value;
+        const memberId = hiddenMemberInput.value;
         const target = members.find(m => m.id === memberId) || members[0];
+        if (!target) {
+          alert("Silakan pilih atau ketik nama pelaku usaha terlebih dahulu.");
+          return;
+        }
         if (callbacks.onLogin && target) {
           callbacks.onLogin({
             role: "member",
@@ -425,6 +660,7 @@ class AuthView {
       quickSiti.onclick = () => {
         if (passInput) passInput.value = "123456";
         const target = members.find(m => m.id === "FTY-001") || members[0];
+        if (target) selectMemberItem(target);
         if (callbacks.onLogin && target) {
           callbacks.onLogin({
             role: "member",
@@ -442,6 +678,7 @@ class AuthView {
       quickFaizah.onclick = () => {
         if (passInput) passInput.value = "123456";
         const target = members.find(m => m.id === "FTY-002") || members[1] || members[0];
+        if (target) selectMemberItem(target);
         if (callbacks.onLogin && target) {
           callbacks.onLogin({
             role: "member",

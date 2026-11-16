@@ -1086,8 +1086,8 @@ export default function DocumentUploadTasks({
                   handleFileUpload('daftar_bahan', e.target.files[0], 'daftar_bahan');
                 }
               }}
-              primaryDownloadLabel="Unduh Template Tabel (.csv / Excel)"
-              onPrimaryDownload={() => handleDownloadOfficial('Template_Tabel_Daftar_Bahan_Baku.csv', downloadBahanTemplate)}
+              primaryDownloadLabel="Unduh Template Excel (.xlsx)"
+              onPrimaryDownload={() => handleDownloadOfficial('Template_Daftar_Bahan_dan_Produk.xlsx', downloadBahanTemplate)}
               uploadButtonLabel="Upload File / Foto Daftar Bahan Lengkap"
             />
 

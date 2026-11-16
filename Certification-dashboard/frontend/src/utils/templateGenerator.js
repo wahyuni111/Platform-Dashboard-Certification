@@ -1,8 +1,9 @@
 /**
  * Generator template berkas resmi SIM-HALAL Fatayat NU Desa Mersi
- * Menghasilkan file Word (.doc/docx compatible) dan Excel (.csv/xls) yang langsung
+ * Menghasilkan file Word (.doc/docx compatible) dan Excel (.xlsx) yang langsung
  * bisa diunduh dan diedit oleh pelaku usaha UMKM.
  */
+import { OFFICIAL_BAHAN_XLSX_BASE64 } from './templateBahanXlsx.base64.js';
 
 export function downloadPermohonanTemplate(member = {}) {
   const memberName = member.nama || 'Ibu Pelaku Usaha';
@@ -221,28 +222,48 @@ Kami berkomitmen secara sungguh-sungguh untuk:
 }
 
 export function downloadBahanTemplate(member = {}) {
-  const businessName = member.usaha || 'Keripik Tempe Barokah';
-  
-  // Format CSV kompatibel dengan Microsoft Excel
-  const rows = [
-    ['FORMULIR RINCIAN BAHAN BAKU DAN BUMBU PRODUKSI'],
-    [`Nama Usaha: ${businessName}`, `Pemilik: ${member.nama || 'Ibu Pelaku Usaha'}`],
-    ['Tanggal Pengisian: 2026', 'Standar Jalur Self-Declare BPJPH'],
-    [],
-    ['No', 'Nama Bahan Baku / Bumbu', 'Merek Dagang', 'Nama Produsen / Toko Pembelian', 'Status Halal / No. Sertifikat BPJPH', 'Masa Berlaku Halal', 'Kategori (Bahan Utama/Bumbu/Penolong)'],
-    ['1', 'Tempe Kedelai Segar', 'Pengrajin Mersi', 'Pengrajin Tempe Desa Mersi', 'Bahan Segar Nabati (Positive List)', 'Alami', 'Bahan Baku Utama'],
-    ['2', 'Tepung Beras', 'Rose Brand', 'PT Budi Starch & Sweetener', 'ID0041000001234', 'Aktif s/d 2028', 'Bahan Utama'],
-    ['3', 'Tepung Tapioka', 'Gunung Agung', 'Toko Bahan Kue Barokah', 'ID0011000005678', 'Aktif s/d 2027', 'Bahan Penolong'],
-    ['4', 'Minyak Goreng Sawit', 'Bimoli / SunCo', 'Supermarket / Pasar Wage', 'ID0021000009876', 'Aktif s/d 2028', 'Media Penggorengan'],
-    ['5', 'Bawang Putih Segar', 'Bawang Brebes', 'Pasar Tradisional Purwokerto', 'Bahan Nabati Murni (Positive List)', 'Alami', 'Bumbu Halus'],
-    ['6', 'Ketumbar Bubuk', 'Desaku', 'PT Motasa Indonesia', 'ID0031000004321', 'Aktif s/d 2027', 'Bumbu Olahan'],
-    ['7', 'Garam Beryodium', 'Dolphin / Daun', 'PT Susanti Megah', 'ID0011000008765', 'Aktif s/d 2028', 'Bumbu'],
-    ['8', 'Air Bersih', 'Air Sumur Masak / PDAM', 'Sumber Sanitasi Rumah Mersi', 'Air Bersih Standar Pangan (Jernih/Tidak Berbau)', 'Harian', 'Bahan Pencampur'],
-    ['9', '[Tuliskan bahan lain jika ada]', '...', '...', '...', '...', '...']
-  ];
+  const filename = 'Template_Daftar_Bahan_dan_Produk.xlsx';
 
-  const csvContent = '\uFEFF' + rows.map(e => e.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\r\n');
-  triggerDownload(csvContent, `Tabel_Rincian_Bahan_Baku_${cleanFilename(businessName)}.csv`, 'text/csv;charset=utf-8;');
+  // 1. Coba unduh berkas resmi statis dari direktori templates
+  try {
+    const link = document.createElement('a');
+    link.href = `templates/${filename}`;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 150);
+  } catch (err) {
+    // 2. Fallback instan menggunakan binary blob resmi dari base64
+    downloadBahanExcelBlob(filename);
+  }
+}
+
+export function downloadBahanExcelBlob(filename = 'Template_Daftar_Bahan_dan_Produk.xlsx') {
+  try {
+    const byteCharacters = atob(OFFICIAL_BAHAN_XLSX_BASE64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 200);
+  } catch (e) {
+    console.error('Gagal mengunduh Excel blob:', e);
+  }
 }
 
 export function downloadSKPenyeliaTemplate(member = {}) {

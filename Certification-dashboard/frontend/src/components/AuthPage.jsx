@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import defaultMembersData from '../../../backend/data/members.json';
 import {
   ShieldCheck,
   User,
@@ -15,16 +16,91 @@ import {
   UserCheck,
   Eye,
   EyeOff,
-  KeyRound
+  KeyRound,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Check,
+  Store
 } from 'lucide-react';
 
 export default function AuthPage({ members = [], onLogin, onRegisterNewMember }) {
   const [activeTab, setActiveTab] = useState('member'); // 'member', 'admin', 'register'
 
+  // Pastikan data anggota selalu tersedia dari master data (tidak pernah kosong)
+  const effectiveMembers = useMemo(() => {
+    return Array.isArray(members) && members.length > 0 ? members : defaultMembersData;
+  }, [members]);
+
   // Member login state
   const [selectedMemberId, setSelectedMemberId] = useState(
-    members[0]?.id || 'FTY-001'
+    effectiveMembers[0]?.id || 'FTY-001'
   );
+
+  const selectedMember = useMemo(() => {
+    return (
+      effectiveMembers.find((m) => m.id === selectedMemberId) ||
+      effectiveMembers[0] ||
+      null
+    );
+  }, [effectiveMembers, selectedMemberId]);
+
+  // Search & Combobox State (Bisa diketik & Bisa diklik)
+  const [searchMemberQuery, setSearchMemberQuery] = useState(
+    selectedMember ? `${selectedMember.nama} • ${selectedMember.usaha}` : ''
+  );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const comboboxRef = useRef(null);
+
+  // Sync text ketika selectedMember berubah dari luar (misal tombol 1-Klik)
+  useEffect(() => {
+    if (selectedMember && !isDropdownOpen) {
+      setSearchMemberQuery(`${selectedMember.nama} • ${selectedMember.usaha}`);
+    }
+  }, [selectedMember, isDropdownOpen]);
+
+  // Tutup dropdown ketika klik di luar area combobox
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (comboboxRef.current && !comboboxRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+        if (selectedMember) {
+          setSearchMemberQuery(`${selectedMember.nama} • ${selectedMember.usaha}`);
+        }
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [selectedMember]);
+
+  // Filter daftar anggota secara real-time saat diketik
+  const filteredMembers = useMemo(() => {
+    if (!searchMemberQuery.trim()) return effectiveMembers;
+    const q = searchMemberQuery.toLowerCase().trim();
+    if (
+      selectedMember &&
+      `${selectedMember.nama} • ${selectedMember.usaha}`.toLowerCase() === q
+    ) {
+      return effectiveMembers;
+    }
+    return effectiveMembers.filter((m) => {
+      const matchName = m.nama && m.nama.toLowerCase().includes(q);
+      const matchUsaha = m.usaha && m.usaha.toLowerCase().includes(q);
+      const matchId = m.id && m.id.toLowerCase().includes(q);
+      const matchKat = m.kategori && m.kategori.toLowerCase().includes(q);
+      return matchName || matchUsaha || matchId || matchKat;
+    });
+  }, [effectiveMembers, searchMemberQuery, selectedMember]);
+
+  // Handler saat nama anggota diklik dari dropdown
+  const handleSelectMember = (m) => {
+    setSelectedMemberId(m.id);
+    setSearchMemberQuery(`${m.nama} • ${m.usaha}`);
+    setIsDropdownOpen(false);
+    setMemberError('');
+  };
+
   const [memberPassword, setMemberPassword] = useState('123456');
   const [showMemberPass, setShowMemberPass] = useState(false);
   const [memberError, setMemberError] = useState('');
@@ -56,8 +132,11 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
       setMemberError('Harap masukkan kata sandi / PIN akun Anda (PIN standar: 123456).');
       return;
     }
-    const target = members.find((m) => m.id === selectedMemberId) || members[0];
-    if (!target) return;
+    const target = effectiveMembers.find((m) => m.id === selectedMemberId) || effectiveMembers[0];
+    if (!target) {
+      setMemberError('Pilih nama Ibu/Bapak atau nama usaha dari daftar terlebih dahulu.');
+      return;
+    }
     onLogin({
       role: 'member',
       memberId: target.id,
@@ -68,9 +147,10 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
 
   // Quick Demo Login for Member
   const handleQuickMemberLogin = (memberId) => {
-    const target = members.find((m) => m.id === memberId) || members[0];
+    const target = effectiveMembers.find((m) => m.id === memberId) || effectiveMembers[0];
     if (!target) return;
     setSelectedMemberId(memberId);
+    setSearchMemberQuery(`${target.nama} • ${target.usaha}`);
     setMemberPassword('123456');
     onLogin({
       role: 'member',
@@ -106,7 +186,7 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
       return;
     }
 
-    const newId = `FTY-${String(members.length + 1).padStart(3, '0')}`;
+    const newId = `FTY-${String(effectiveMembers.length + 1).padStart(3, '0')}`;
     const newMemberData = {
       id: newId,
       nama: regForm.nama.trim(),
@@ -238,25 +318,146 @@ export default function AuthPage({ members = [], onLogin, onRegisterNewMember })
                   </div>
                 )}
 
-                {/* 1. Pilih Nama Pelaku Usaha */}
-                <div>
-                  <label htmlFor="selectMemberAuth" className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Nama Ibu/Bapak atau Nama Usaha:
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="selectMemberAuth"
-                      value={selectedMemberId}
-                      onChange={(e) => setSelectedMemberId(e.target.value)}
-                      className="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl p-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-pointer"
-                    >
-                      {members.map((m) => (
-                        <option key={m.id} value={m.id}>
-                          {m.nama} &bull; {m.usaha} ({m.kategori})
-                        </option>
-                      ))}
-                    </select>
+                {/* 1. Pilih / Ketik Nama Pelaku Usaha (Bisa Diketik & Bisa Diklik Dropdown) */}
+                <div ref={comboboxRef} className="relative">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label htmlFor="memberSearchInput" className="block text-xs font-bold text-slate-700">
+                      Nama Ibu/Bapak atau Nama Usaha:
+                    </label>
+                    <span className="text-[11px] text-nu-800 font-semibold flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Bisa diketik &amp; diklik ({effectiveMembers.length} UMKM)
+                    </span>
                   </div>
+
+                  {/* Kotak Input Pencarian & Pilihan Dropdown */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <Search className="w-4 h-4 text-emerald-700" />
+                    </div>
+
+                    <input
+                      id="memberSearchInput"
+                      type="text"
+                      value={searchMemberQuery}
+                      onChange={(e) => {
+                        setSearchMemberQuery(e.target.value);
+                        setIsDropdownOpen(true);
+                      }}
+                      onFocus={() => setIsDropdownOpen(true)}
+                      placeholder="Ketik nama Ibu/Bapak atau nama usaha..."
+                      autoComplete="off"
+                      className="w-full text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-300 hover:border-nu-500 text-slate-900 rounded-2xl pl-10 pr-20 py-3.5 focus:ring-2 focus:ring-nu-600/30 focus:border-nu-700 outline-none transition-all cursor-text shadow-sm"
+                    />
+
+                    {/* Tombol Kanan: Tombol Hapus (X) + Tombol Panah Buka Dropdown */}
+                    <div className="absolute inset-y-0 right-0 pr-2 flex items-center gap-1">
+                      {searchMemberQuery && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearchMemberQuery('');
+                            setIsDropdownOpen(true);
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-lg transition-all"
+                          title="Hapus ketikan"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setIsDropdownOpen((prev) => !prev)}
+                        className="p-2 text-nu-800 hover:bg-nu-100/80 rounded-xl transition-all cursor-pointer flex items-center justify-center"
+                        title={isDropdownOpen ? 'Tutup daftar pilihan' : 'Buka daftar pilihan'}
+                      >
+                        {isDropdownOpen ? (
+                          <ChevronUp className="w-5 h-5 text-nu-800" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5 text-nu-800" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Dropdown Menu List Hasil Pencarian / Seluruh Anggota */}
+                  {isDropdownOpen && (
+                    <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+                      {/* Header Dropdown */}
+                      <div className="px-3.5 py-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center justify-between text-[11px] text-slate-600 font-bold">
+                        <span>Pilih nama usaha Anda dari daftar:</span>
+                        <span className="bg-white px-2 py-0.5 rounded-full border border-slate-200 text-nu-800">
+                          {filteredMembers.length} UMKM ditemukan
+                        </span>
+                      </div>
+
+                      {/* Scrollable Items (Maksimal 60, Mudah disentuh di HP/PC) */}
+                      <div className="max-h-60 overflow-y-auto divide-y divide-slate-100">
+                        {filteredMembers.length > 0 ? (
+                          filteredMembers.map((m) => {
+                            const isSelected = m.id === selectedMemberId;
+                            return (
+                              <button
+                                key={m.id}
+                                type="button"
+                                onClick={() => handleSelectMember(m)}
+                                className={`w-full min-h-[48px] px-3.5 py-2.5 text-left flex items-center justify-between gap-2.5 transition-all hover:bg-emerald-50/80 cursor-pointer ${
+                                  isSelected ? 'bg-emerald-50 text-emerald-950 font-black' : 'text-slate-800'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                  <span className="font-mono text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 flex-shrink-0">
+                                    {m.id}
+                                  </span>
+                                  <div className="min-w-0">
+                                    <div className="text-xs sm:text-sm font-bold truncate">
+                                      {m.nama}
+                                    </div>
+                                    <div className="text-[11px] text-slate-500 truncate">
+                                      {m.usaha} &bull; <span className="text-emerald-700">{m.kategori}</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {isSelected && (
+                                  <div className="flex items-center gap-1 text-emerald-700 text-xs font-bold flex-shrink-0">
+                                    <Check className="w-4 h-4 stroke-[2.5]" />
+                                    <span className="hidden sm:inline">Terpilih</span>
+                                  </div>
+                                )}
+                              </button>
+                            );
+                          })
+                        ) : (
+                          <div className="p-4 text-center">
+                            <p className="text-xs text-slate-600 mb-2">
+                              Nama &ldquo;<span className="font-bold text-slate-900">{searchMemberQuery}</span>&rdquo; tidak ditemukan.
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setActiveTab('register');
+                                setIsDropdownOpen(false);
+                              }}
+                              className="text-xs font-bold text-nu-800 hover:text-nu-900 underline"
+                            >
+                              + Daftarkan Usaha Baru di Sini
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Badge Pelaku Usaha Terpilih Saat Ini */}
+                  {selectedMember && (
+                    <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-emerald-900 bg-emerald-50/90 border border-emerald-200 rounded-xl px-2.5 py-1">
+                      <Check className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
+                      <span className="truncate">
+                        Terpilih: <strong>{selectedMember.nama}</strong> ({selectedMember.usaha})
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* 2. Password / PIN Pelaku Usaha */}

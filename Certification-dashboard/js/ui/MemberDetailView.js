@@ -637,8 +637,8 @@ class MemberDetailView {
 
           <!-- 6. Tabel Rincian Bahan Baku & Produk -->
           ${this._renderVanillaDocumentCard('daftar_bahan', '6', 'Tabel Rincian Bahan Baku & Produk', 'Daftar bahan baku, bumbu kemasan, minyak, dan sumber air layak konsumsi.', savedData.files['daftar_bahan'] || (member.daftar_bahan ? { name: `Rincian_Bahan_${this._cleanStr(member.usaha)}.xlsx`, formattedSize: '195 KB', uploadedAt: 'Tersimpan' } : null), {
-            primaryDlId: 'btn_dl_bahan_csv',
-            primaryDlLabel: 'Unduh Template Tabel (.csv / Excel)',
+            primaryDlId: 'btn_dl_bahan_xlsx',
+            primaryDlLabel: 'Unduh Template Excel (.xlsx)',
             uploadBtnLabel: 'Upload File / Foto Daftar Bahan Lengkap'
           })}
 
@@ -897,7 +897,7 @@ class MemberDetailView {
     bindOfficialDownload("btn_dl_permohonan_pdf", "Template_Surat_Permohonan_BPJPH.pdf");
     bindOfficialDownload("btn_dl_manual_docx", "Template_Manual_SJPH_Lengkap_Resmi.docx", this._downloadManualSJPHDoc.bind(this));
     bindOfficialDownload("btn_dl_manual_pdf", "Panduan_Lengkap_SJPH_BPJPH.pdf");
-    bindOfficialDownload("btn_dl_bahan_csv", "Template_Tabel_Daftar_Bahan_Baku.csv", this._downloadBahanCSV.bind(this));
+    bindOfficialDownload("btn_dl_bahan_xlsx", "Template_Daftar_Bahan_dan_Produk.xlsx", this._downloadBahanExcel.bind(this));
     bindOfficialDownload("btn_dl_penyelia_docx", "Template_SK_Penetapan_Penyelia_Halal.docx", this._downloadSKPenyeliaDoc.bind(this));
     bindOfficialDownload("btn_dl_ikrar_doc", "Template_Surat_Pernyataan_Bebas_Babi_Ikrar.doc", this._downloadIkrarDoc.bind(this));
 
@@ -1100,7 +1100,42 @@ class MemberDetailView {
     this._triggerDl(html, `Manual_SJPH_${this._cleanStr(member.usaha)}.doc`, 'application/msword');
   }
 
-  _downloadBahanCSV(member) {
+  _downloadBahanExcel(member) {
+    const filename = "Template_Daftar_Bahan_dan_Produk.xlsx";
+    try {
+      if (window.OFFICIAL_BAHAN_XLSX_BASE64) {
+        const byteCharacters = atob(window.OFFICIAL_BAHAN_XLSX_BASE64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 150);
+        return;
+      }
+    } catch (e) {
+      console.warn("Fallback download excel:", e);
+    }
+
+    const link = document.createElement("a");
+    link.href = `templates/${filename}`;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => document.body.removeChild(link), 100);
+  }
+
+  _downloadBahanCSV_legacy(member) {
     const csv = `\uFEFF"FORMULIR RINCIAN BAHAN BAKU & BUMBU PRODUKSI"\r\n"Nama Usaha: ${member.usaha}","Pemilik: ${member.nama}"\r\n\r\n"No","Nama Bahan","Merek","Produsen/Toko","Status Halal / No Sertifikat","Keterangan"\r\n"1","Bahan Utama Nabati","Alami","Pasar Mersi","Positive List Kemenag","Bahan Segar"\r\n"2","Tepung Beras/Tapioka","Rose Brand / Gunung","Toko Barokah","ID0041000001234","Tersertifikasi"\r\n"3","Minyak Goreng","Bimoli / SunCo","Supermarket","ID0021000009876","Tersertifikasi"\r\n"4","Bumbu Rempah Segar","Bawang/Ketumbar","Pasar Wage","Positive List","Bumbu Alami"\r\n"5","Air Bersih","PDAM / Sumur Dapur","Sumber Mersi","Standar Air Minum","Sanitasi Bersih"\r\n`;
     this._triggerDl(csv, `Tabel_Bahan_Baku_${this._cleanStr(member.usaha)}.csv`, 'text/csv;charset=utf-8;');
   }
